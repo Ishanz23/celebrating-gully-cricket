@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "celebrating-gully-cricket": {
+    "gully-cricket-manager": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -17,7 +17,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/celebrating-gully-cricket",
+            "outputPath": "dist/gully-cricket-manager",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -67,18 +67,18 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "celebrating-gully-cricket:build"
+            "browserTarget": "gully-cricket-manager:build"
           },
           "configurations": {
             "production": {
-              "browserTarget": "celebrating-gully-cricket:build:production"
+              "browserTarget": "gully-cricket-manager:build:production"
             }
           }
         },
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "celebrating-gully-cricket:build"
+            "browserTarget": "gully-cricket-manager:build"
           }
         },
         "test": {
@@ -115,15 +115,15 @@
           "builder": "@angular-devkit/build-angular:protractor",
           "options": {
             "protractorConfig": "e2e/protractor.conf.js",
-            "devServerTarget": "celebrating-gully-cricket:serve"
+            "devServerTarget": "gully-cricket-manager:serve"
           },
           "configurations": {
             "production": {
-              "devServerTarget": "celebrating-gully-cricket:serve:production"
+              "devServerTarget": "gully-cricket-manager:serve:production"
             }
           }
         }
       }
     }},
-  "defaultProject": "celebrating-gully-cricket"
+  "defaultProject": "gully-cricket-manager"
 }

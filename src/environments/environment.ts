@@ -11,10 +11,10 @@ export const environment = {
     projectId: 'celebrating-para-cricket',
     storageBucket: 'celebrating-para-cricket.appspot.com',
     messagingSenderId: '902504210804',
-    appId: '1:902504210804:web:0c840ebd23457ef0db4c21',
-    measurementId: 'G-VFLJ46571M'
+    appId: '1:902504210804:web:3a431ce18529f6c4db4c21',
+    measurementId: 'G-S00CJQNPJR'
   }
-}
+};
 
 /*
  * For easier debugging in development mode, you can import the following file
