@@ -5,7 +5,7 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #0a101f;
+  background: #070b18;
   z-index: 1;
   padding: 0rem 1rem;
   bottom: 0;
@@ -127,9 +127,9 @@ nav {
         margin-left: 2rem;
       }
       .active-link {
-        font-weight: bold;
-        border-bottom: 2px solid #e631a0;
+        border-bottom: 2px solid #eb3fa9;
         border-left: none;
+        color: #eb3fa9;
       }
     }
     .hamburger {

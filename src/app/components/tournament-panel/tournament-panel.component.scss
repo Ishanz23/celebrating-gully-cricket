@@ -15,7 +15,7 @@
     align-items: center;
     justify-content: space-evenly;
     letter-spacing: 0.5rem;
-    height: 40%;
+    height: 30%;
     .title {
       font-size: 1.5rem;
       text-transform: uppercase;
@@ -36,18 +36,43 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      box-shadow: 1px 2px 4px #072c2a;
+      background: rgba(180, 236, 47, 0.7);
+      color: #072c2a;
       padding: 1rem;
       padding-left: 1.25rem;
+      box-shadow: 1px 2px 4px #0e5350;
       border-radius: 0.25rem;
+      font-weight: bold;
       text-transform: uppercase;
       letter-spacing: 0.25rem;
-      background: rgba(164, 230, 9, 0.541);
-      color: #072c2a;
-      font-weight: bold;
+      cursor: pointer;
+      transition: all 0.5s ease-in-out;
     }
-    // .dashboard {
-    //   background: #08503e;
-    // }
+    .button:hover {
+      transform: scale(1.1);
+      background: rgba(180, 236, 47, 1);
+    }
+  }
+}
+
+@media screen and (min-width: 720px) {
+  .tournament-panel {
+    .header {
+      letter-spacing: 1rem;
+      height: 30%;
+      .title {
+        font-size: 2rem;
+      }
+      .season {
+        font-size: 1.5rem;
+      }
+    }
+    .actions {
+      height: 40%;
+      flex-direction: row;
+      .button {
+        width: 20%;
+      }
+    }
   }
 }
