@@ -1,13 +1,106 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>CelebratingParaCricket</title>
-  <base href="/">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
+  <head>
+    <meta charset="utf-8" />
+    <title>CelebratingParaCricket</title>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet" />
+    <style type="text/css">
+      body,
+      html {
+        height: 100%;
+      }
+      @-webkit-keyframes dot-keyframes {
+        0% {
+          opacity: 0.4;
+          -webkit-transform: scale(1, 1);
+          transform: scale(1, 1);
+        }
+        50% {
+          opacity: 0.8;
+          -webkit-transform: scale(1.2, 1.2);
+          transform: scale(1.2, 1.2);
+        }
+        100% {
+          opacity: 0.4;
+          -webkit-transform: scale(1, 1);
+          transform: scale(1, 1);
+        }
+      }
+      @keyframes dot-keyframes {
+        0% {
+          opacity: 0.4;
+          -webkit-transform: scale(1, 1);
+          transform: scale(1, 1);
+        }
+        50% {
+          opacity: 0.8;
+          -webkit-transform: scale(1.2, 1.2);
+          transform: scale(1.2, 1.2);
+        }
+        100% {
+          opacity: 0.4;
+          -webkit-transform: scale(1, 1);
+          transform: scale(1, 1);
+        }
+      }
+      .loading-dots {
+        width: 100%;
+        position: relative;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        height: 100%;
+      }
+      .loading-dots--dot {
+        -webkit-animation: dot-keyframes 1.5s infinite ease-in-out;
+        animation: dot-keyframes 1.5s infinite ease-in-out;
+        background-color: #f35;
+        border-radius: 10px;
+        display: inline-block;
+        height: 8px;
+        width: 8px;
+        margin-right: 4px;
+      }
+      .loading-dots--dot:nth-child(2) {
+        -webkit-animation-delay: 0.5s;
+        animation-delay: 0.5s;
+      }
+      .loading-dots--dot:nth-child(3) {
+        -webkit-animation-delay: 1s;
+        animation-delay: 1s;
+      }
+
+      .pink {
+        background: #d500f9;
+      }
+
+      .green {
+        background: #00e676;
+      }
+
+      .orange {
+        background: #ff3d00;
+      }
+
+      .blue {
+        background: #1a237e;
+      }
+    </style>
+      <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 </head>
-<body>
-  <app-root></app-root>
-</body>
+  <body>
+    <app-root>
+      <div class="loading-dots">
+        <div class="loading-dots--dot pink"></div>
+        <div class="loading-dots--dot green"></div>
+        <div class="loading-dots--dot orange"></div>
+        <div class="loading-dots--dot blue"></div>
+      </div>
+    </app-root>
+  </body>
 </html>
