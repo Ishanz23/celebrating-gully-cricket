@@ -1,1 +1,10 @@
-<p>players works!</p>
+<div class="players-container">
+  <div class="players">
+    <div class="player" *ngFor="let player of players">
+      <span>{{ player.firstName }} {{ player.lastName }}</span>
+    </div>
+  </div>
+  <div class="actions">
+    <div class="add-player" (click)="addPlayer()">Add</div>
+  </div>
+</div>
