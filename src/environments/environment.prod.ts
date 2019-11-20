@@ -1,13 +1,13 @@
 export const environment = {
   production: true,
   firebase: {
-    apiKey: 'AIzaSyDuxKakfx9gVuX4PhvPkWxhleR-IVFJUxo',
-    authDomain: 'celebrating-para-cricket.firebaseapp.com',
-    databaseURL: 'https://celebrating-para-cricket.firebaseio.com',
-    projectId: 'celebrating-para-cricket',
-    storageBucket: 'celebrating-para-cricket.appspot.com',
-    messagingSenderId: '902504210804',
-    appId: '1:902504210804:web:3a431ce18529f6c4db4c21',
-    measurementId: 'G-S00CJQNPJR'
+    apiKey: "AIzaSyD_w9v1Ca3HAD0BYVqAn8LFJV6lVcGlrGU",
+    authDomain: "gullycricketmanager.firebaseapp.com",
+    databaseURL: "https://gullycricketmanager.firebaseio.com",
+    projectId: "gullycricketmanager",
+    storageBucket: "gullycricketmanager.appspot.com",
+    messagingSenderId: "282499014530",
+    appId: "1:282499014530:web:85bed0683558fe4800b99b",
+    measurementId: "G-VXR3F6FKWD"
   }
 };

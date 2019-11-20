@@ -1,11 +1,14 @@
 {
   "targets": {
-    "celebrating-para-cricket": {
+    "gullycricketmanager": {
       "hosting": {
         "gully-cricket-manager": [
-          "celebrating-para-cricket"
+          "gullycricketmanager"
         ]
       }
     }
+  },
+  "projects": {
+    "default": "gullycricketmanager"
   }
 }

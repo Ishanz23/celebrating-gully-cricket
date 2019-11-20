@@ -37,20 +37,20 @@ export class PlayersComponent implements OnInit {
   }
 
   addPlayer() {
-    this.playersCollection.add({
+    this.playersCollection.doc("sumit-das").set({
       firstName: "Sumit",
-      lastName: "Karmakar",
-      nickName: "",
+      lastName: "Das",
+      nickName: "Subho",
       battingOrientation: "right",
       bowlingOrientation: "right",
       specialization: "all-rounder",
-      address: "Bakultola",
-      mobile: "8777898116",
+      address: "Sarsuna",
+      mobile: "8961382295",
       tournaments: [
         {
           tournmanent: this.afStore
             .collection("tournaments")
-            .doc("AKuVnn9TJvHk5VxwS42Q").ref
+            .doc("para-cricket-league-2020").ref
         }
       ],
       career: {
