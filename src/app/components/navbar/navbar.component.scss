@@ -7,7 +7,6 @@ nav {
   align-items: center;
   background: #070b18;
   z-index: 1;
-  padding: 0rem 1rem;
   bottom: 0;
   .logo {
     font-size: 16px;
@@ -16,6 +15,11 @@ nav {
     letter-spacing: 2px;
     cursor: pointer;
     outline: none;
+    padding-left: 1rem;
+    transition: all 0.3s ease-in-out;
+  }
+  .logo:hover {
+    color: #e94dad;
   }
   .nav-links {
     display: flex;
@@ -42,11 +46,16 @@ nav {
       text-transform: uppercase;
       outline: none;
       padding: 0.5rem 0rem;
-      transition: all 0.3s ease;
+      transition: all 0.3s ease-in-out;
       border-left: 3px solid transparent;
     }
     .active-link {
       font-weight: bold;
+      border-left: 3px solid #e631a0;
+    }
+    li:hover {
+      color: #e94dad;
+      background: #070b18;
       border-left: 3px solid #e631a0;
     }
   }
@@ -57,6 +66,7 @@ nav {
     width: 24px;
     height: 19px;
     cursor: pointer;
+    margin-right: 1rem;
     .lines {
       position: relative;
       width: 100%;
@@ -97,6 +107,9 @@ nav {
       }
     }
   }
+  .hamburger:hover .lines > div {
+    background: #e94dad;
+  }
 }
 
 @media screen and (min-width: 720px) {
@@ -115,21 +128,24 @@ nav {
       align-items: center;
       background: transparent;
       transform: translateX(0%);
+      width: 30%;
       li {
-        width: auto;
         letter-spacing: 1px;
-        font-size: 12px;
+        font-size: 0.75rem;
         height: 100%;
-        display: flex;
         align-items: center;
         border-bottom: 2px solid transparent;
         border-left: none;
-        margin-left: 2rem;
       }
       .active-link {
         border-bottom: 2px solid #e94dad;
         border-left: none;
         color: #e94dad;
+      }
+      li:hover {
+        background: #0f1830;
+        border-bottom: 2px solid #e94dad;
+        border-left: none;
       }
     }
     .hamburger {
