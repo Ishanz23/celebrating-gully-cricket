@@ -1,14 +1,29 @@
 <nav>
   <div class="logo" [routerLink]="['/']">gully cricket manager</div>
   <ul class="nav-links" [ngClass]="{ opened: isMenuOpen }">
-    <li class="nav-link" [routerLink]="['/tournaments']" routerLinkActive="active-link">Tournaments</li>
-    <li class="nav-link" [routerLink]="['/players']" routerLinkActive="active-link">Players</li>
+    <li
+      class="nav-link"
+      [routerLink]="['/tournaments']"
+      routerLinkActive="active-link"
+    >
+      Tournaments
+    </li>
+    <li
+      class="nav-link"
+      [routerLink]="['/players']"
+      routerLinkActive="active-link"
+    >
+      Players
+    </li>
   </ul>
   <div class="hamburger" (click)="isMenuOpen = !isMenuOpen">
     <div class="lines">
       <div class="line1" [ngClass]="{ 'rotate-clockwise': isMenuOpen }"></div>
       <div class="line2" [ngClass]="{ contract: isMenuOpen }"></div>
-      <div class="line3" [ngClass]="{ 'rotate-anticlockwise': isMenuOpen }"></div>
+      <div
+        class="line3"
+        [ngClass]="{ 'rotate-anticlockwise': isMenuOpen }"
+      ></div>
     </div>
   </div>
 </nav>

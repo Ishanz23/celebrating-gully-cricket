@@ -1,1 +1,6 @@
-<p>tournaments works!</p>
+<div class="tournaments">
+  <app-tournament-panel
+    *ngFor="let tournament of tournaments$ | async"
+    [tournament]="tournament"
+  ></app-tournament-panel>
+</div>

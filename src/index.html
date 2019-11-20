@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
   <head>
-    <meta charset="utf-8"/>
+    <meta charset="utf-8" />
     <title>Gully Cricket Manager</title>
-    <base href="/"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="icon" type="image/x-icon" href="favicon.ico"/>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&amp;display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
+    <base href="/" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <link rel="icon" type="image/x-icon" href="favicon.ico" />
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
     <style type="text/css">
       body,
       html {
@@ -56,14 +62,14 @@
         height: 100%;
       }
       .loading-dots--dot {
-        -webkit-animation: dot-keyframes 2s infinite ease-in-out;
-        animation: dot-keyframes 2s infinite ease-in-out;
+        -webkit-animation: dot-keyframes 2.5s infinite ease-in-out;
+        animation: dot-keyframes 2.5s infinite ease-in-out;
         background-color: #f35;
-        border-radius: 10px;
+        border-radius: 50%;
         display: inline-block;
-        height: 8px;
-        width: 8px;
-        margin-right: 4px;
+        height: 12px;
+        width: 12px;
+        margin-right: 8px;
       }
       .loading-dots--dot:nth-child(2) {
         -webkit-animation-delay: 0.5s;
@@ -76,6 +82,10 @@
       .loading-dots--dot:nth-child(4) {
         -webkit-animation-delay: 1.5s;
         animation-delay: 1.5s;
+      }
+      .loading-dots--dot:nth-child(5) {
+        -webkit-animation-delay: 2s;
+        animation-delay: 2s;
       }
 
       .pink {
@@ -94,11 +104,17 @@
         background: #1a237e;
       }
     </style>
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&amp;display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet"/>
-    <link rel="manifest" href="manifest.webmanifest">
-  <meta name="theme-color" content="#1976d2">
-</head>
+    <link
+      href="https://fonts.googleapis.com/css?family=Roboto:300,400,500&amp;display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/icon?family=Material+Icons"
+      rel="stylesheet"
+    />
+    <link rel="manifest" href="manifest.webmanifest" />
+    <meta name="theme-color" content="#1976d2" />
+  </head>
   <body>
     <app-root>
       <div class="loading-dots">
@@ -106,8 +122,11 @@
         <div class="loading-dots--dot green"></div>
         <div class="loading-dots--dot orange"></div>
         <div class="loading-dots--dot blue"></div>
+        <div class="loading-dots--dot pink"></div>
       </div>
     </app-root>
-    <noscript>Please enable JavaScript to continue using this application.</noscript>
-</body>
+    <noscript
+      >Please enable JavaScript to continue using this application.</noscript
+    >
+  </body>
 </html>

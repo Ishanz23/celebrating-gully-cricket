@@ -21,14 +21,10 @@ import { NavbarComponent } from "./components/navbar/navbar.component";
 import { HomeComponent } from "./components/home/home.component";
 import { TournamentPanelComponent } from "./components/tournament-panel/tournament-panel.component";
 import { AngularFirestoreModule } from "@angular/fire/firestore";
+import { SharedModule } from "./components/shared.module";
 
 @NgModule({
-  declarations: [
-    AppComponent,
-    NavbarComponent,
-    HomeComponent,
-    TournamentPanelComponent
-  ],
+  declarations: [AppComponent, NavbarComponent, HomeComponent],
   imports: [
     BrowserModule,
     AppRoutingModule,
@@ -51,7 +47,8 @@ import { AngularFirestoreModule } from "@angular/fire/firestore";
       enabled: environment.production
     }),
     AngularFireModule.initializeApp(environment.firebase),
-    AngularFirestoreModule
+    AngularFirestoreModule,
+    SharedModule
   ],
   providers: [],
   bootstrap: [AppComponent]
