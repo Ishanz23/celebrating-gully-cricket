@@ -12,27 +12,25 @@
     margin: 1rem 0rem;
   }
 }
-.actions {
-  .add-player {
-    display: flex;
-    position: absolute;
-    bottom: 2.5rem;
-    right: 2.5rem;
-    z-index: 9;
-    width: 5rem;
-    height: 5rem;
-    background: #e94dad;
-    color: #ececec;
-    padding: 1rem;
-    border-radius: 50%;
-    box-shadow: 1px 2px 4px #83342e;
-    cursor: pointer;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.5s ease-in-out;
-  }
-  .add-player:hover {
-    transform: scale(1.1);
-    background: #f154b5;
-  }
+.add-player {
+  display: flex;
+  position: absolute;
+  bottom: 2.5rem;
+  right: 2.5rem;
+  z-index: 1;
+  width: 5rem;
+  height: 5rem;
+  background: #e94dad;
+  color: #ececec;
+  padding: 1rem;
+  border-radius: 50%;
+  box-shadow: 1px 2px 4px #83342e;
+  cursor: pointer;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.5s ease-in-out;
+}
+.add-player:hover {
+  transform: scale(1.1);
+  background: #f154b5;
 }
