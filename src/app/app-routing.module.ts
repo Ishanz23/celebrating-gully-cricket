@@ -1,26 +1,30 @@
-import { NgModule } from "@angular/core";
-import { Routes, RouterModule } from "@angular/router";
-import { HomeComponent } from "./components/home/home.component";
+import { NgModule } from '@angular/core'
+import { Routes, RouterModule } from '@angular/router'
+import { HomeComponent } from './components/home/home.component'
 
 const routes: Routes = [
   {
-    path: "",
-    pathMatch: "full",
+    path: '',
+    pathMatch: 'full',
     component: HomeComponent
   },
   {
-    path: "tournaments",
+    path: 'tournaments',
     loadChildren: () =>
-      import("./features/tournaments/tournaments.module").then(
+      import('./features/tournaments/tournaments.module').then(
         m => m.TournamentsModule
       )
   },
   {
-    path: "players",
+    path: 'players',
     loadChildren: () =>
-      import("./features/players/players.module").then(m => m.PlayersModule)
+      import('./features/players/players.module').then(m => m.PlayersModule)
+  },
+  {
+    path: 'enroll',
+    redirectTo: 'tournaments/enroll'
   }
-];
+]
 
 @NgModule({
   imports: [RouterModule.forRoot(routes)],

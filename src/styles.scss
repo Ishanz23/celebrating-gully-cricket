@@ -18,7 +18,7 @@ $gully-cricket-manager-accent: mat-palette($mat-pink, A200, A100, A400);
 $gully-cricket-manager-warn: mat-palette($mat-red);
 
 // Create the theme object (a Sass map containing all of the palettes).
-$gully-cricket-manager-theme: mat-light-theme(
+$gully-cricket-manager-theme: mat-dark-theme(
   $gully-cricket-manager-primary,
   $gully-cricket-manager-accent,
   $gully-cricket-manager-warn
@@ -34,6 +34,8 @@ $gully-cricket-manager-theme: mat-light-theme(
   margin: 0px;
   padding: 0px;
   box-sizing: border-box;
+  color: #ececec;
+  font-size: 1rem;
 }
 html,
 body {
