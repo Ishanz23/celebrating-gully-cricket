@@ -50,5 +50,7 @@ export class EnrollPlayerComponent implements OnInit {
     this.is_enrolled = true
   }
 
-  reset() {}
+  reset(event: Event, newPlayer = false) {
+    this.newPlayerForm.reset()
+  }
 }
