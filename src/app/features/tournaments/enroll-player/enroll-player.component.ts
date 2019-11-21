@@ -15,7 +15,8 @@ export class EnrollPlayerComponent implements OnInit {
   myControl = new FormControl()
   players: Player[]
   is_enrolled = false
-  playerForm = this.fb.group({
+  playerType: 'none' | 'new' | 'registered' = 'none'
+  newPlayerForm = this.fb.group({
     firstName: ['', Validators.required],
     lastName: [''],
     nickName: [''],

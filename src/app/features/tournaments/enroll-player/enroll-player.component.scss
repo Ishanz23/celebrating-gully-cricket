@@ -7,45 +7,29 @@
   flex-direction: column;
   align-items: center;
   padding: 1rem;
-  h2 {
-    letter-spacing: 0.25rem;
-  }
-  .find-yourself {
+  mat-form-field {
     width: 100%;
     height: auto;
-    background: rgb(0, 0, 0, 0.8);
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    padding: 1rem;
-    mat-form-field {
+    input {
       width: 100%;
-      height: auto;
+      caret-color: $primary-text-color;
     }
   }
-  .new-player {
+  mat-tab-group {
     width: 100%;
-    height: auto;
+    background: $panel-color;
+  }
+  .registered,
+  .player-form {
     display: flex;
     flex-direction: column;
-    align-items: center;
     justify-content: center;
-    background: $nav-background-color;
-    margin-top: 1rem;
+    align-items: center;
+    width: 100%;
     padding: 1rem;
-    .player-form {
+    & > div {
       width: 100%;
-      // display: grid;
-      & > div {
-        width: 100%;
-        mat-form-field {
-          width: 100%;
-        }
-      }
-      .address {
-        grid-column-start: 1 / span 2;
-      }
+      text-align: center;
     }
   }
   .actions {
@@ -56,6 +40,7 @@
     margin-top: 1rem;
     .enroll-button {
       flex: 1;
+      background-color: $green-button-color;
     }
     .reset-button {
       flex: 1;
@@ -66,57 +51,27 @@
 
 @media screen and (min-width: 720px) {
   .enroll {
-    width: 100%;
+    width: 70%;
     height: 100%;
     overflow: auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 1rem;
-    .find-yourself {
-      width: 100%;
-      height: auto;
-      background: rgb(0, 0, 0, 0.8);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 1rem 0rem;
-      mat-form-field {
-        width: 80%;
-        height: auto;
-      }
+    margin: auto;
+    h2 {
+      letter-spacing: 0.75rem;
     }
-    .new-player {
-      width: 100%;
-      height: auto;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      background: $nav-background-color;
-      margin-top: 1rem;
-      padding: 1rem;
-      .player-form {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        grid-template-rows: repeat(2, 1fr);
-        grid-gap: 1rem;
-        padding: 1rem;
-        .address {
-          grid-column-start: 1 / span 2;
-        }
-      }
+    .registered,
+    .player-form {
       .actions {
-        width: 100%;
+        width: 50%;
         display: flex;
         justify-content: flex-end;
         align-items: center;
-        .enroll-button {
-        }
-        .reset-button {
-          margin-left: 1rem;
-        }
+      }
+      mat-form-field {
+        width: 100%;
       }
     }
   }

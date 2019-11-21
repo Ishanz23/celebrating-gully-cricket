@@ -5,7 +5,8 @@ import { MatOptionModule } from '@angular/material/core'
 import { MatAutocompleteModule } from '@angular/material/autocomplete'
 import { MatInputModule } from '@angular/material/input'
 import { MatButtonModule } from '@angular/material/button'
-
+import { MatRadioModule } from '@angular/material/radio'
+import { MatTabsModule } from '@angular/material/tabs'
 @NgModule({
   imports: [],
   exports: [
@@ -14,7 +15,9 @@ import { MatButtonModule } from '@angular/material/button'
     MatOptionModule,
     MatAutocompleteModule,
     MatInputModule,
-    MatButtonModule
+    MatButtonModule,
+    MatRadioModule,
+    MatTabsModule
   ],
   declarations: [],
   providers: []
