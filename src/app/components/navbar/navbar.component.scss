@@ -1,3 +1,4 @@
+@import '~src/styles';
 nav {
   width: 100%;
   height: 8vh;
@@ -5,13 +6,13 @@ nav {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background: #070b18;
+  background: $nav-background-color;
   z-index: 9;
   bottom: 0;
   .logo {
     font-size: 16px;
     text-transform: uppercase;
-    color: #ececec;
+    color: $primary-text-color;
     letter-spacing: 2px;
     cursor: pointer;
     outline: none;
@@ -19,7 +20,7 @@ nav {
     transition: all 0.3s ease-in-out;
   }
   .logo:hover {
-    color: #e94dad;
+    color: $hover-accent-color;
   }
   .nav-links {
     display: flex;
@@ -30,7 +31,7 @@ nav {
     width: 50%;
     flex-direction: column;
     justify-content: space-evenly;
-    background: #0f1830;
+    background: $nav-background-color;
     align-items: center;
     transform: translateX(100%);
     transition: transform 0.5s ease;
@@ -40,7 +41,7 @@ nav {
       justify-content: center;
       align-items: center;
       list-style: none;
-      color: #ececec;
+      color: $primary-text-color;
       cursor: pointer;
       letter-spacing: 4px;
       text-transform: uppercase;
@@ -54,8 +55,8 @@ nav {
       border-left: 3px solid #e631a0;
     }
     li:hover {
-      color: #e94dad;
-      background: #070b18;
+      color: $hover-accent-color;
+      background: $nav-background-color;
       border-left: 3px solid #e631a0;
     }
   }
@@ -75,7 +76,7 @@ nav {
         height: 2px;
         width: 100%;
         border-radius: 8px;
-        background: #ececec;
+        background: $primary-text-color;
         opacity: 1;
         transition: all 0.5s ease;
         -webkit-transform-origin: left center;
@@ -108,7 +109,7 @@ nav {
     }
   }
   .hamburger:hover .lines > div {
-    background: #e94dad;
+    background: $hover-accent-color;
   }
 }
 
@@ -138,13 +139,13 @@ nav {
         border-left: none;
       }
       .active-link {
-        border-bottom: 2px solid #e94dad;
+        border-bottom: 2px solid $hover-accent-color;
         border-left: none;
-        color: #e94dad;
+        color: $hover-accent-color;
       }
       li:hover {
         background: #0f1830;
-        border-bottom: 2px solid #e94dad;
+        border-bottom: 2px solid $hover-accent-color;
         border-left: none;
       }
     }

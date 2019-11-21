@@ -30,6 +30,10 @@ $gully-cricket-manager-theme: mat-dark-theme(
 @include angular-material-theme($gully-cricket-manager-theme);
 
 /* You can add global styles to this file, and also import other style files */
+$primary-text-color: #ececec;
+$nav-background-color: #070b18;
+$nav-links-background-color: #0f1830;
+$hover-accent-color: #e94dad;
 * {
   margin: 0px;
   padding: 0px;

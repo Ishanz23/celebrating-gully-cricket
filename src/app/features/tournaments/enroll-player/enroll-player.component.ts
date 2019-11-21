@@ -3,7 +3,7 @@ import { Router, ActivatedRoute } from '@angular/router'
 import { Observable } from 'rxjs'
 import { AngularFirestore } from '@angular/fire/firestore'
 import { Player } from '../../players/player'
-import { FormControl } from '@angular/forms'
+import { FormControl, FormBuilder, Validators } from '@angular/forms'
 
 @Component({
   selector: 'app-enroll-player',
@@ -15,10 +15,20 @@ export class EnrollPlayerComponent implements OnInit {
   myControl = new FormControl()
   players: Player[]
   is_enrolled = false
-  constructor(
-    private activatedRoute: ActivatedRoute,
-    private afs: AngularFirestore
-  ) {}
+  playerForm = this.fb.group({
+    firstName: ['', Validators.required],
+    lastName: [''],
+    nickName: [''],
+    address: [''],
+    mobile: ['', Validators.required],
+    yearOfBirth: [1992, Validators.required],
+    pin: [1234, Validators.required],
+    battingOrientation: [''],
+    bowlingOrientation: [''],
+    specialization: ['']
+  })
+
+  constructor(private activatedRoute: ActivatedRoute, private afs: AngularFirestore, private fb: FormBuilder) {}
 
   ngOnInit() {
     this.afs
@@ -34,8 +44,10 @@ export class EnrollPlayerComponent implements OnInit {
     return player ? player.firstName + ' ' + player.lastName : undefined
   }
 
-  enroll() {
+  enroll(event: Event, newPlayer = false) {
     console.log(this.myControl.value)
     this.is_enrolled = true
   }
+
+  reset() {}
 }
