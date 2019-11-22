@@ -167,6 +167,9 @@ export class EnrollPlayerComponent implements OnInit, OnDestroy {
                 })
                 .catch(err => this.openSnackBar(err, 'Error!'))
                 .finally(() => (this.loading = false))
+              this.playersCollection.doc(this.registeredPlayerForm.value.player.id).update({
+                tournaments: firebase.firestore.FieldValue.arrayUnion(this.tournamentDocument.ref)
+              })
             } else {
               this.loading = false
               this.openSnackBar('Player already enrolled!', '')
