@@ -31,8 +31,8 @@ export class EnrollPlayerComponent implements OnInit {
     lastName: [null],
     nickName: [null],
     address: [null],
-    mobile: [null, Validators.required],
-    yearOfBirth: [null, Validators.required],
+    mobile: [null, [Validators.required, Validators.maxLength(10)]],
+    yearOfBirth: [null, [Validators.required, Validators.maxLength(4)]],
     pin: [null, [Validators.required, Validators.maxLength(4)]],
     battingOrientation: ['right'],
     bowlingOrientation: ['right'],
@@ -53,7 +53,7 @@ export class EnrollPlayerComponent implements OnInit {
     this.tournamentDocument.valueChanges().subscribe(tournament => {
       this.tournament = { id: this.tournament_id, ...tournament }
     })
-    this.playersCollection = this.afs.collection<Player>('players')
+    this.playersCollection = this.afs.collection<Player>('players', ref => ref.orderBy('firstName'))
     this.playersCollection.valueChanges({ idField: 'id' }).subscribe(players => {
       this.players = players
     })
@@ -66,46 +66,56 @@ export class EnrollPlayerComponent implements OnInit {
     if (newPlayer) {
       console.log(this.newPlayerForm.value)
       if (this.newPlayerForm.valid) {
-        this.playersCollection
-          .add({
-            ...this.newPlayerForm.value,
-            career: {
-              ballsBowled: 0,
-              ballsFaced: 0,
-              battingAverage: 0,
-              bestBowlingFigures: { runs: 0, wickets: 0 },
-              catches: 0,
-              economy: 0,
-              highestScore: 0,
-              innings: 0,
-              matches: 0,
-              notOuts: 0,
-              runs: 0,
-              runsConceded: 0,
-              strikeRate: 0,
-              stumpings: 0,
-              wickets: 0
-            },
-            tournaments: [this.afs.doc(`tournaments/${this.tournament_id}`).ref]
-          })
-          .then(data => {
-            console.log(data.id)
-            this.tournamentDocument
-              .update({
-                players: firebase.firestore.FieldValue.arrayUnion({
-                  player: this.playersCollection.doc(data.id).ref,
-                  isNominated: this.newPlayerForm.value.captaincy,
-                  count: 0
+        this.afs
+          .collection('players', ref => ref.where('mobile', '==', this.newPlayerForm.controls.mobile.value))
+          .valueChanges()
+          .subscribe(players => {
+            if (players && players.length > 0) {
+              this.openSnackBar('Mobile number already exists', 'Error!')
+            } else {
+              this.playersCollection
+                .add({
+                  ...this.newPlayerForm.value,
+                  career: {
+                    ballsBowled: 0,
+                    ballsFaced: 0,
+                    battingAverage: 0,
+                    bestBowlingFigures: { runs: 0, wickets: 0 },
+                    catches: 0,
+                    economy: 0,
+                    highestScore: 0,
+                    innings: 0,
+                    matches: 0,
+                    notOuts: 0,
+                    runs: 0,
+                    runsConceded: 0,
+                    strikeRate: 0,
+                    stumpings: 0,
+                    wickets: 0
+                  },
+                  tournaments: [this.afs.doc(`tournaments/${this.tournament_id}`).ref]
                 })
-              })
-              .then(data => {
-                this.openSnackBar(
-                  this.newPlayerForm.value.firstName + ' ' + this.newPlayerForm.value.lastName,
-                  'Enrolled!'
-                )
-              })
+                .then(data => {
+                  console.log(data.id)
+                  this.tournamentDocument
+                    .update({
+                      players: firebase.firestore.FieldValue.arrayUnion({
+                        player: this.playersCollection.doc(data.id).ref,
+                        isNominated: this.newPlayerForm.value.captaincy,
+                        count: 0
+                      })
+                    })
+                    .then(data => {
+                      this.openSnackBar(
+                        this.newPlayerForm.value.firstName + ' ' + this.newPlayerForm.value.lastName,
+                        'Enrolled!'
+                      )
+                      this.newPlayerForm.reset()
+                    })
+                })
+                .catch(err => this.openSnackBar(err, 'Error!'))
+            }
           })
-          .catch(err => this.openSnackBar(err, 'Error!'))
       } else {
         this.openSnackBar('Data you entered is incorrect', 'Invalid')
       }

@@ -1,14 +1,11 @@
 <div class="players-container">
   <div class="players">
     <div class="player" *ngFor="let player of players">
-      <span
-        >{{ player.firstName }} {{ player.lastName }}
-        {{ player.nickName ? "(" + player.nickName + ")" : "" }}</span
-      >
+      <span>{{ player.firstName }} {{ player.lastName }} {{ player.nickName ? '(' + player.nickName + ')' : '' }}</span>
     </div>
   </div>
   <div class="players" *ngIf="loading">
     <app-loader radius="medium"></app-loader>
   </div>
-  <div class="add-player" (click)="addPlayer()">Add</div>
+  <!-- <div class="add-player" (click)="addPlayer()">Add</div> -->
 </div>

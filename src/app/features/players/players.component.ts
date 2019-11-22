@@ -11,24 +11,14 @@ export class PlayersComponent implements OnInit {
   loading = true
   playersCollection: AngularFirestoreCollection<Player>
   players: any[] = []
-  constructor(private afStore: AngularFirestore) {}
+  constructor(private afs: AngularFirestore) {}
 
   ngOnInit() {
-    this.playersCollection = this.afStore.collection<Player>('players')
+    this.playersCollection = this.afs.collection<Player>('players', ref => ref.orderBy('firstName'))
     this.playersCollection.valueChanges({ idField: 'id' }).subscribe(players => {
       this.loading = false
       this.players = players
     })
-    // this.playersCollection
-    //   .doc<Player>("cYI7uRSkhhRTJ64jC87i")
-    //   .valueChanges()
-    //   .subscribe(player => {
-    //     console.log(player.tournaments[0].tournmanent);
-    //     this.afStore
-    //       .doc(player.tournaments[0].tournmanent)
-    //       .valueChanges()
-    //       .subscribe(data => console.log(data));
-    //   });
   }
 
   addPlayer() {
@@ -43,7 +33,7 @@ export class PlayersComponent implements OnInit {
       mobile: '8961382295',
       tournaments: [
         {
-          tournmanent: this.afStore.collection('tournaments').doc('para-cricket-league-2020').ref
+          tournmanent: this.afs.collection('tournaments').doc('para-cricket-league-2020').ref
         }
       ],
       career: {
