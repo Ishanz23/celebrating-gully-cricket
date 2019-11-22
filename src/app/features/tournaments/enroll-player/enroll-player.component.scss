@@ -45,7 +45,6 @@
     }
     .captaincy {
       display: flex;
-      letter-spacing: 0.125rem;
       align-items: center;
     }
   }
@@ -64,6 +63,9 @@
       margin-left: 1rem;
     }
   }
+}
+.loading {
+  margin: 1rem;
 }
 
 @media screen and (min-width: 720px) {

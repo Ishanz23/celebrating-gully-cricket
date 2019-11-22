@@ -19,19 +19,29 @@
             <span class="caption">Address:</span> <span class="data">{{ player.address }}</span>
           </div>
           <div class="actions">
-            <button mat-flat-button (click)="modify($event, player)" class="modify-button" [disabled]="loading">
-              Update
-            </button>
-            <button
-              mat-flat-button
-              color="warn"
-              (click)="delete($event, player)"
-              class="delete-button"
-              type="reset"
-              [disabled]="loading"
-            >
-              Delete
-            </button>
+            <ng-container *ngIf="deletionActive != player.id">
+              <button mat-flat-button color="warn" (click)="deletionActive = player.id" class="delete-button">
+                Delete
+              </button>
+              <button mat-flat-button (click)="modify($event, player)" class="modify-button" [disabled]="loading">
+                Update
+              </button>
+            </ng-container>
+            <ng-container *ngIf="deletionActive == player.id">
+              <span class="message">Delete {{ player.firstName }} {{ player.lastName }}?</span>
+              <button
+                mat-flat-button
+                (click)="confirmDelete($event, player)"
+                class="delete-button prompt"
+                [disabled]="loading"
+                color="warn"
+              >
+                Yes
+              </button>
+              <button mat-flat-button (click)="deletionActive = null" class="modify-button prompt">
+                No
+              </button>
+            </ng-container>
           </div>
         </div>
       </mat-expansion-panel>

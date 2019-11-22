@@ -27,12 +27,19 @@
       display: flex;
       align-items: center;
       padding: 0.5rem 0rem;
-      justify-content: flex-end;
+      justify-content: space-between;
+      .message {
+        color: $caption-text-color;
+        letter-spacing: 0.125rem;
+      }
+      button {
+        width: 45%;
+      }
       .modify-button {
         background-color: $green-button-color;
       }
-      .delete-button {
-        margin-left: 1rem;
+      .prompt {
+        width: 20%;
       }
     }
     .item {
@@ -44,7 +51,7 @@
       background: $p-background-color;
       .caption {
         width: 50%;
-        color: $caption-text-color;
+        color: $pink-button-color;
         letter-spacing: 0.125rem;
         font-size: 0.875rem;
         font-weight: bold;
@@ -56,25 +63,21 @@
     }
   }
 }
-.add-player {
-  display: flex;
-  position: absolute;
-  bottom: 2.5rem;
-  right: 2.5rem;
-  z-index: 1;
-  width: 5rem;
-  height: 5rem;
-  background: #e94dad;
-  color: $primary-text-color;
-  padding: 1rem;
-  border-radius: 50%;
-  box-shadow: 1px 2px 4px #83342e;
-  cursor: pointer;
-  align-items: center;
-  justify-content: center;
-  transition: all 0.5s ease-in-out;
-}
-.add-player:hover {
-  transform: scale(1.1);
-  background: #f154b5;
+
+@media screen and (min-width: 720px) {
+  .players {
+    .player-details {
+      margin-top: 2rem;
+      .actions {
+        justify-content: flex-end;
+        button {
+          width: 20%;
+          margin-left: 1rem;
+        }
+        .prompt {
+          width: 10%;
+        }
+      }
+    }
+  }
 }

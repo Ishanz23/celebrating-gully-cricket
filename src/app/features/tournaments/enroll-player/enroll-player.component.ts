@@ -1,17 +1,19 @@
-import { Component, OnInit } from '@angular/core'
+import { Component, OnInit, OnDestroy } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore'
 import { FormControl, FormBuilder, Validators } from '@angular/forms'
 import * as firebase from 'firebase'
 import { Player } from '../../players/player'
 import { MatSnackBar, MatSnackBarVerticalPosition, MatSnackBarHorizontalPosition } from '@angular/material/snack-bar'
+import { Subscription } from 'rxjs'
+import { take } from 'rxjs/operators'
 
 @Component({
   selector: 'app-enroll-player',
   templateUrl: './enroll-player.component.html',
   styleUrls: ['./enroll-player.component.scss']
 })
-export class EnrollPlayerComponent implements OnInit {
+export class EnrollPlayerComponent implements OnInit, OnDestroy {
   playersCollection: AngularFirestoreCollection<Player>
   tournament_id: string
   tournament: any
@@ -40,6 +42,7 @@ export class EnrollPlayerComponent implements OnInit {
     captaincy: [false]
   })
   loading = false
+  subscriptions = new Subscription()
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -51,13 +54,21 @@ export class EnrollPlayerComponent implements OnInit {
   ngOnInit() {
     this.tournament_id = this.activatedRoute.snapshot.paramMap.get('id')
     this.tournamentDocument = this.afs.doc(`tournaments/${this.tournament_id}`)
-    this.tournamentDocument.valueChanges().subscribe(tournament => {
-      this.tournament = { id: this.tournament_id, ...tournament }
-    })
+    this.subscriptions.add(
+      this.tournamentDocument.valueChanges().subscribe(tournament => {
+        this.tournament = { id: this.tournament_id, ...tournament }
+      })
+    )
     this.playersCollection = this.afs.collection<Player>('players', ref => ref.orderBy('firstName'))
-    this.playersCollection.valueChanges({ idField: 'id' }).subscribe(players => {
-      this.players = players
-    })
+    this.subscriptions.add(
+      this.playersCollection.valueChanges({ idField: 'id' }).subscribe(players => {
+        this.players = players
+      })
+    )
+  }
+
+  ngOnDestroy() {
+    this.subscriptions.unsubscribe()
   }
   displayFn(player?: Player): string | undefined {
     return player ? player.firstName + ' ' + player.lastName : undefined
@@ -71,6 +82,7 @@ export class EnrollPlayerComponent implements OnInit {
         this.afs
           .collection('players', ref => ref.where('mobile', '==', this.newPlayerForm.controls.mobile.value))
           .valueChanges()
+          .pipe(take(1))
           .subscribe(players => {
             if (players && players.length > 0) {
               this.loading = false
