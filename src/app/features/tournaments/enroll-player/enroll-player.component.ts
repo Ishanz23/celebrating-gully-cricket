@@ -39,6 +39,7 @@ export class EnrollPlayerComponent implements OnInit {
     specialization: ['all-rounder'],
     captaincy: [false]
   })
+  loading = false
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -63,14 +64,16 @@ export class EnrollPlayerComponent implements OnInit {
   }
 
   enroll(event: Event, newPlayer = false) {
+    this.loading = true
     if (newPlayer) {
-      console.log(this.newPlayerForm.value)
+      // console.log(this.newPlayerForm.value)
       if (this.newPlayerForm.valid) {
         this.afs
           .collection('players', ref => ref.where('mobile', '==', this.newPlayerForm.controls.mobile.value))
           .valueChanges()
           .subscribe(players => {
             if (players && players.length > 0) {
+              this.loading = false
               this.openSnackBar('Mobile number already exists', 'Error!')
             } else {
               this.playersCollection
@@ -96,7 +99,6 @@ export class EnrollPlayerComponent implements OnInit {
                   tournaments: [this.afs.doc(`tournaments/${this.tournament_id}`).ref]
                 })
                 .then(data => {
-                  console.log(data.id)
                   this.tournamentDocument
                     .update({
                       players: firebase.firestore.FieldValue.arrayUnion({
@@ -112,15 +114,18 @@ export class EnrollPlayerComponent implements OnInit {
                       )
                       this.newPlayerForm.reset()
                     })
+                    .finally(() => (this.loading = false))
                 })
                 .catch(err => this.openSnackBar(err, 'Error!'))
+                .finally(() => (this.loading = false))
             }
           })
       } else {
+        this.loading = false
         this.openSnackBar('Data you entered is incorrect', 'Invalid')
       }
     } else {
-      console.log(this.registeredPlayerForm.value)
+      // console.log(this.registeredPlayerForm.value)
       if (
         this.registeredPlayerForm.valid &&
         this.registeredPlayerForm.value.player.pin === this.registeredPlayerForm.value.pin
@@ -149,12 +154,18 @@ export class EnrollPlayerComponent implements OnInit {
                   )
                 })
                 .catch(err => this.openSnackBar(err, 'Error!'))
+                .finally(() => (this.loading = false))
             } else {
+              this.loading = false
               this.openSnackBar('Player already enrolled!', '')
             }
+          } else {
+            this.loading = false
+            this.openSnackBar('Something went wrong :(', 'Error!')
           }
         })
       } else {
+        this.loading = false
         this.openSnackBar('Incorrect pin', 'Error!')
       }
     }

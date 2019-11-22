@@ -44,10 +44,23 @@
           <mat-checkbox formControlName="captaincy">Interested in captaincy</mat-checkbox>
         </div>
         <div class="actions">
-          <button mat-raised-button color="primary" (click)="enroll($event, true)" class="enroll-button">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="enroll($event, true)"
+            class="enroll-button"
+            [disabled]="loading"
+          >
             Enroll
           </button>
-          <button mat-raised-button color="warn" (click)="reset($event, true)" class="reset-button" type="reset">
+          <button
+            mat-raised-button
+            color="warn"
+            (click)="reset($event, true)"
+            class="reset-button"
+            type="reset"
+            [disabled]="loading"
+          >
             Reset
           </button>
         </div>
@@ -77,14 +90,24 @@
           <mat-checkbox formControlName="captaincy">Interested in captaincy</mat-checkbox>
         </div>
         <div class="actions">
-          <button mat-raised-button color="primary" (click)="enroll($event)" class="enroll-button">
+          <button mat-raised-button color="primary" (click)="enroll($event)" class="enroll-button" [disabled]="loading">
             Enroll
           </button>
-          <button mat-raised-button color="warn" (click)="reset($event)" class="reset-button" type="reset">
+          <button
+            mat-raised-button
+            color="warn"
+            (click)="reset($event)"
+            class="reset-button"
+            type="reset"
+            [disabled]="loading"
+          >
             Reset
           </button>
         </div>
       </form>
     </mat-tab>
   </mat-tab-group>
+  <div class="loading" *ngIf="loading">
+    <app-loader radius="medium"></app-loader>
+  </div>
 </div>

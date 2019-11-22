@@ -6,18 +6,18 @@
           <mat-panel-title> {{ player.firstName }} {{ player.lastName }} </mat-panel-title>
         </mat-expansion-panel-header>
         <div class="player-details">
-          <p *ngIf="player.nickName">
+          <div *ngIf="player.nickName" class="item">
             <span class="caption">Nickname:</span> <span class="data">{{ player.nickName }}</span>
-          </p>
-          <p>
+          </div>
+          <div class="item">
             <span class="caption">Mobile:</span> <span class="data">{{ player.mobile }}</span>
-          </p>
-          <p>
+          </div>
+          <div class="item">
             <span class="caption">Year Of Birth:</span> <span class="data">{{ player.yearOfBirth }}</span>
-          </p>
-          <p *ngIf="player.address">
+          </div>
+          <div *ngIf="player.address" class="item">
             <span class="caption">Address:</span> <span class="data">{{ player.address }}</span>
-          </p>
+          </div>
         </div>
       </mat-expansion-panel>
     </mat-accordion>
@@ -25,5 +25,4 @@
   <div class="players" *ngIf="loading">
     <app-loader radius="medium"></app-loader>
   </div>
-  <!-- <div class="add-player" (click)="addPlayer()">Add</div> -->
 </div>
