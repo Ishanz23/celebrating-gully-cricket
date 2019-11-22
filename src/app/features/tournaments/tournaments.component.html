@@ -1,6 +1,6 @@
-<div class="tournaments">
-  <app-tournament-panel
-    *ngFor="let tournament of tournaments$ | async"
-    [tournament]="tournament"
-  ></app-tournament-panel>
+<div class="loader" *ngIf="loading">
+  <app-loader radius="medium"></app-loader>
+</div>
+<div class="tournaments" *ngIf="!loading && tournaments && tournaments.length > 0">
+  <app-tournament-panel *ngFor="let tournament of tournaments" [tournament]="tournament"></app-tournament-panel>
 </div>

@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core'
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore'
 import { Player } from './player'
+import { MatSnackBar, MatSnackBarVerticalPosition, MatSnackBarHorizontalPosition } from '@angular/material/snack-bar'
 
 @Component({
   selector: 'app-players',
@@ -11,7 +12,7 @@ export class PlayersComponent implements OnInit {
   loading = true
   playersCollection: AngularFirestoreCollection<Player>
   players: any[] = []
-  constructor(private afs: AngularFirestore) {}
+  constructor(private afs: AngularFirestore, private _snackBar: MatSnackBar) {}
 
   ngOnInit() {
     this.playersCollection = this.afs.collection<Player>('players', ref => ref.orderBy('firstName'))
@@ -53,6 +54,33 @@ export class PlayersComponent implements OnInit {
         stumpings: 0,
         wickets: 0
       }
+    })
+  }
+  modify(event: Event, player: Player) {
+    this.openSnackBar(`Coming Soon!`)
+  }
+
+  delete(event: Event, player: Player) {
+    this.playersCollection
+      .doc(player.id)
+      .delete()
+      .then(done => this.openSnackBar(`${player.firstName} ${player.lastName} data deleted`))
+      .catch(err => this.openSnackBar(`Failed to delete ${player.firstName} ${player.lastName} data.`))
+  }
+
+  private openSnackBar(
+    message: string,
+    action: string = '',
+    duration: number = 2000,
+    panelClass = 'accent',
+    verticalPosition: MatSnackBarVerticalPosition = 'bottom',
+    horizontalPosition: MatSnackBarHorizontalPosition = 'center'
+  ) {
+    this._snackBar.open(message, action, {
+      duration,
+      panelClass,
+      verticalPosition,
+      horizontalPosition
     })
   }
 }

@@ -18,11 +18,26 @@
           <div *ngIf="player.address" class="item">
             <span class="caption">Address:</span> <span class="data">{{ player.address }}</span>
           </div>
+          <div class="actions">
+            <button mat-raised-button (click)="modify($event, player)" class="modify-button" [disabled]="loading">
+              Update
+            </button>
+            <button
+              mat-raised-button
+              color="warn"
+              (click)="delete($event, player)"
+              class="delete-button"
+              type="reset"
+              [disabled]="loading"
+            >
+              Delete
+            </button>
+          </div>
         </div>
       </mat-expansion-panel>
     </mat-accordion>
   </div>
-  <div class="players" *ngIf="loading">
+  <div class="loader" *ngIf="loading">
     <app-loader radius="medium"></app-loader>
   </div>
 </div>
