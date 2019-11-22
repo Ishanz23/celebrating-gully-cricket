@@ -1,29 +1,24 @@
-import { Component, OnInit } from "@angular/core";
-import {
-  AngularFirestore,
-  AngularFirestoreCollection
-} from "@angular/fire/firestore";
-import { Player } from "./player";
+import { Component, OnInit } from '@angular/core'
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore'
+import { Player } from './player'
 
 @Component({
-  selector: "app-players",
-  templateUrl: "./players.component.html",
-  styleUrls: ["./players.component.scss"]
+  selector: 'app-players',
+  templateUrl: './players.component.html',
+  styleUrls: ['./players.component.scss']
 })
 export class PlayersComponent implements OnInit {
-  loading = true;
-  playersCollection: AngularFirestoreCollection<Player>;
-  players: any[] = [];
+  loading = true
+  playersCollection: AngularFirestoreCollection<Player>
+  players: any[] = []
   constructor(private afStore: AngularFirestore) {}
 
   ngOnInit() {
-    this.playersCollection = this.afStore.collection<Player>("players");
-    this.playersCollection
-      .valueChanges({ idField: "id" })
-      .subscribe(players => {
-        this.loading = false;
-        this.players = players;
-      });
+    this.playersCollection = this.afStore.collection<Player>('players')
+    this.playersCollection.valueChanges({ idField: 'id' }).subscribe(players => {
+      this.loading = false
+      this.players = players
+    })
     // this.playersCollection
     //   .doc<Player>("cYI7uRSkhhRTJ64jC87i")
     //   .valueChanges()
@@ -37,20 +32,18 @@ export class PlayersComponent implements OnInit {
   }
 
   addPlayer() {
-    this.playersCollection.doc("sumit-das").set({
-      firstName: "Sumit",
-      lastName: "Das",
-      nickName: "Subho",
-      battingOrientation: "right",
-      bowlingOrientation: "right",
-      specialization: "all-rounder",
-      address: "Sarsuna",
-      mobile: "8961382295",
+    this.playersCollection.doc('sumit-das').set({
+      firstName: 'Sumit',
+      lastName: 'Das',
+      nickName: 'Subho',
+      battingOrientation: 'right',
+      bowlingOrientation: 'right',
+      specialization: 'all-rounder',
+      address: 'Sarsuna',
+      mobile: '8961382295',
       tournaments: [
         {
-          tournmanent: this.afStore
-            .collection("tournaments")
-            .doc("para-cricket-league-2020").ref
+          tournmanent: this.afStore.collection('tournaments').doc('para-cricket-league-2020').ref
         }
       ],
       career: {
@@ -70,6 +63,6 @@ export class PlayersComponent implements OnInit {
         stumpings: 0,
         wickets: 0
       }
-    });
+    })
   }
 }

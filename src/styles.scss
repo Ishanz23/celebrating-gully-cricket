@@ -34,9 +34,9 @@ $primary-text-color: #ececec;
 $nav-background-color: #070b18;
 $nav-links-background-color: rgb(15, 24, 48);
 $panel-color: rgb(15, 24, 48, 0.8);
-$hover-accent-color: rgb(233, 77, 173);
-$green-button-color: rgb(27, 116, 89);
-$green-button-color-transparent: rgba(180, 236, 47, 0.7);
+$hover-accent-color: rgb(255, 64, 129);
+$green-button-color: rgb(26, 197, 175);
+$pink-button-color: rgb(255, 64, 129);
 
 * {
   margin: 0px;
@@ -62,4 +62,8 @@ body {
 body {
   margin: 0;
   font-family: Roboto, 'Helvetica Neue', sans-serif;
+}
+
+.accent {
+  background: $hover-accent-color;
 }
