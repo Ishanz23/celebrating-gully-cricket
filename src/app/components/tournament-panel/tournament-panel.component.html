@@ -4,12 +4,12 @@
     <h4 class="season">{{ tournament.season }}</h4>
   </div>
   <div class="actions">
-    <div class="enroll button" (click)="navigateToEnrollment()">
+    <div class="enroll button" (click)="navigate($event, 'enroll')">
       <span>Enroll</span>
     </div>
-    <div class="teams button"><span>Teams</span></div>
-    <div class="schedule button"><span>Schedule</span></div>
-    <div class="vote button"><span>Vote</span></div>
-    <div class="dashboard button"><span>Dashboard</span></div>
+    <div class="teams button" (click)="showComingSoon()"><span>Teams</span></div>
+    <div class="schedule button" (click)="showComingSoon()"><span>Schedule</span></div>
+    <div class="vote button" (click)="showComingSoon()"><span>Vote</span></div>
+    <div class="dashboard button" (click)="showComingSoon()"><span>Dashboard</span></div>
   </div>
 </section>

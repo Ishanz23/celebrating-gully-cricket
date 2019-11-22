@@ -19,11 +19,11 @@
             <span class="caption">Address:</span> <span class="data">{{ player.address }}</span>
           </div>
           <div class="actions">
-            <button mat-raised-button (click)="modify($event, player)" class="modify-button" [disabled]="loading">
+            <button mat-flat-button (click)="modify($event, player)" class="modify-button" [disabled]="loading">
               Update
             </button>
             <button
-              mat-raised-button
+              mat-flat-button
               color="warn"
               (click)="delete($event, player)"
               class="delete-button"
