@@ -1,14 +1,80 @@
 <div class="enroll">
+  <div class="tournament">
+    <h2 *ngIf="tournament">{{ tournament?.name + ' (' + tournament?.season + ')' | uppercase }}</h2>
+  </div>
   <mat-tab-group mat-stretch-tabs color="accent">
+    <mat-tab label="New Players">
+      <form class="player-form" [formGroup]="newPlayerForm">
+        <div class="name">
+          <mat-form-field>
+            <input matInput placeholder="Firstname *" formControlName="firstName" type="text" />
+          </mat-form-field>
+        </div>
+        <div class="lastname">
+          <mat-form-field>
+            <input matInput placeholder="Lastname" formControlName="lastName" type="text" />
+          </mat-form-field>
+        </div>
+        <div class="pin">
+          <mat-form-field>
+            <input matInput placeholder="New Pin * ( Max 4 characters )" type="password" formControlName="pin" />
+          </mat-form-field>
+        </div>
+        <div class="mobile">
+          <mat-form-field>
+            <input matInput placeholder="Mobile No. *" formControlName="mobile" type="number" />
+          </mat-form-field>
+        </div>
+        <div class="year-of-birth">
+          <mat-form-field>
+            <input matInput placeholder="Year Of Birth *" type="number" formControlName="yearOfBirth" />
+          </mat-form-field>
+        </div>
+        <div class="nickname">
+          <mat-form-field>
+            <input matInput placeholder="Nickname" formControlName="nickName" type="text" />
+          </mat-form-field>
+        </div>
+        <div class="address">
+          <mat-form-field>
+            <input matInput placeholder="Address" type="text" formControlName="address" type="text" />
+          </mat-form-field>
+        </div>
+        <div class="captaincy">
+          <mat-checkbox formControlName="captaincy">Interested in captaincy</mat-checkbox>
+        </div>
+        <div class="actions">
+          <button
+            mat-raised-button
+            color="primary"
+            (click)="enroll($event, true)"
+            class="enroll-button"
+            [disabled]="loading"
+          >
+            Enroll
+          </button>
+          <button
+            mat-raised-button
+            color="warn"
+            (click)="reset($event, true)"
+            class="reset-button"
+            type="reset"
+            [disabled]="loading"
+          >
+            Reset
+          </button>
+        </div>
+      </form>
+    </mat-tab>
     <mat-tab label="Registered Players">
-      <div class="registered">
-        <mat-form-field class="example-full-width">
+      <form class="registered" [formGroup]="registeredPlayerForm">
+        <mat-form-field>
           <input
             type="text"
-            placeholder="Search"
-            aria-label="Number"
+            placeholder="Search *"
+            aria-label="Search"
             matInput
-            [formControl]="myControl"
+            formControlName="player"
             [matAutocomplete]="auto"
           />
           <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
@@ -18,136 +84,30 @@
           </mat-autocomplete>
         </mat-form-field>
         <mat-form-field>
-          <input matInput placeholder="Pin *" type="number" />
+          <input matInput placeholder="Pin *" type="password" formControlName="pin" />
         </mat-form-field>
-        <div class="actions">
-          <button mat-raised-button color="primary" (click)="enroll($event)" class="enroll-button">
-            Enroll
-          </button>
-          <button mat-raised-button color="warn" (click)="reset($event)" class="reset-button">
-            Reset
-          </button>
-        </div>
-      </div>
-    </mat-tab>
-    <mat-tab label="New Players">
-      <form class="player-form" [formGroup]="newPlayerForm">
-        <div class="name">
-          <mat-form-field formGroupName="firstName">
-            <input matInput placeholder="Firstname *" />
-          </mat-form-field>
-        </div>
-        <div class="lastname">
-          <mat-form-field formGroupName="lastName">
-            <input matInput placeholder="Lastname *" />
-          </mat-form-field>
-        </div>
-        <div class="pin">
-          <mat-form-field formGroupName="pin">
-            <input matInput placeholder="New Pin *" type="number" />
-          </mat-form-field>
-        </div>
-        <div class="mobile">
-          <mat-form-field formGroupName="mobile">
-            <input matInput placeholder="Mobile No. *" />
-          </mat-form-field>
-        </div>
-        <div class="year-of-birth">
-          <mat-form-field formGroupName="yearOfBirth">
-            <input matInput placeholder="Year Of Birth *" type="number" />
-          </mat-form-field>
-        </div>
-        <div class="nickname">
-          <mat-form-field formGroupName="nickName">
-            <input matInput placeholder="Nickname" />
-          </mat-form-field>
-        </div>
-        <div class="address">
-          <mat-form-field formGroupName="address">
-            <input matInput placeholder="Address" type="text" />
-          </mat-form-field>
+        <div class="captaincy">
+          <mat-checkbox formControlName="captaincy">Interested in captaincy</mat-checkbox>
         </div>
         <div class="actions">
-          <button mat-raised-button color="primary" (click)="enroll($event, true)" class="enroll-button">
+          <button mat-raised-button color="primary" (click)="enroll($event)" class="enroll-button" [disabled]="loading">
             Enroll
           </button>
-          <button mat-raised-button color="warn" (click)="reset($event, true)" class="reset-button">
+          <button
+            mat-raised-button
+            color="warn"
+            (click)="reset($event)"
+            class="reset-button"
+            type="reset"
+            [disabled]="loading"
+          >
             Reset
           </button>
         </div>
       </form>
     </mat-tab>
   </mat-tab-group>
-  <!-- <div class="player-form-panel" *ngIf="playerType !== 'none'">
-    <h2>{{ playerType | uppercase }} PLAYERS</h2>
-    <div class="form-container">
-      <ng-container *ngIf="playerType == 'registered'">
-        <mat-form-field class="example-full-width">
-          <input
-            type="text"
-            placeholder="Search"
-            aria-label="Number"
-            matInput
-            [formControl]="myControl"
-            [matAutocomplete]="auto"
-          />
-          <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
-            <mat-option *ngFor="let player of players" [value]="player">
-              {{ player.firstName + ' ' + player.lastName + (player.nickName ? ' (' + player.nickName + ')' : '') }}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-        <mat-form-field>
-          <input matInput placeholder="Pin *" type="number" />
-        </mat-form-field>
-      </ng-container>
-      <ng-container *ngIf="playerType == 'new'">
-        <form class="player-form" [formGroup]="newPlayerForm">
-          <div class="name">
-            <mat-form-field formGroupName="firstName">
-              <input matInput placeholder="Firstname *" />
-            </mat-form-field>
-          </div>
-          <div class="lastname">
-            <mat-form-field formGroupName="lastName">
-              <input matInput placeholder="Lastname *" />
-            </mat-form-field>
-          </div>
-          <div class="pin">
-            <mat-form-field formGroupName="pin">
-              <input matInput placeholder="New Pin *" type="number" />
-            </mat-form-field>
-          </div>
-          <div class="mobile">
-            <mat-form-field formGroupName="mobile">
-              <input matInput placeholder="Mobile No. *" />
-            </mat-form-field>
-          </div>
-          <div class="year-of-birth">
-            <mat-form-field formGroupName="yearOfBirth">
-              <input matInput placeholder="Year Of Birth *" type="number" />
-            </mat-form-field>
-          </div>
-          <div class="nickname">
-            <mat-form-field formGroupName="nickName">
-              <input matInput placeholder="Nickname" />
-            </mat-form-field>
-          </div>
-          <div class="address">
-            <mat-form-field formGroupName="address">
-              <input matInput placeholder="Address" type="text" />
-            </mat-form-field>
-          </div>
-        </form>
-      </ng-container>
-    </div>
-    <div class="actions">
-      <button mat-raised-button color="primary" (click)="enroll($event)" class="enroll-button">
-        Enroll
-      </button>
-      <button mat-raised-button color="warn" (click)="reset($event)" class="reset-button">
-        Reset
-      </button>
-    </div>
-  </div> -->
+  <div class="loading" *ngIf="loading">
+    <app-loader radius="medium"></app-loader>
+  </div>
 </div>

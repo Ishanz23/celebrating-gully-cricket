@@ -44,5 +44,9 @@ testem.log
 # System Files
 .DS_Store
 Thumbs.db
+<<<<<<< HEAD
 .firebase/*
 *.cache
+=======
+/.firebase
+>>>>>>> 7344c41c3067a3e84556b69503845c42555154f9

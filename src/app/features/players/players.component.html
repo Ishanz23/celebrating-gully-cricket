@@ -1,14 +1,43 @@
 <div class="players-container">
   <div class="players">
-    <div class="player" *ngFor="let player of players">
-      <span
-        >{{ player.firstName }} {{ player.lastName }}
-        {{ player.nickName ? "(" + player.nickName + ")" : "" }}</span
-      >
-    </div>
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let player of players">
+        <mat-expansion-panel-header>
+          <mat-panel-title> {{ player.firstName }} {{ player.lastName }} </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="player-details">
+          <div *ngIf="player.nickName" class="item">
+            <span class="caption">Nickname:</span> <span class="data">{{ player.nickName }}</span>
+          </div>
+          <div class="item">
+            <span class="caption">Mobile:</span> <span class="data">{{ player.mobile }}</span>
+          </div>
+          <div class="item">
+            <span class="caption">Year Of Birth:</span> <span class="data">{{ player.yearOfBirth }}</span>
+          </div>
+          <div *ngIf="player.address" class="item">
+            <span class="caption">Address:</span> <span class="data">{{ player.address }}</span>
+          </div>
+          <div class="actions">
+            <button mat-flat-button (click)="modify($event, player)" class="modify-button" [disabled]="loading">
+              Update
+            </button>
+            <button
+              mat-flat-button
+              color="warn"
+              (click)="delete($event, player)"
+              class="delete-button"
+              type="reset"
+              [disabled]="loading"
+            >
+              Delete
+            </button>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
   </div>
-  <div class="players" *ngIf="loading">
+  <div class="loader" *ngIf="loading">
     <app-loader radius="medium"></app-loader>
   </div>
-  <div class="add-player" (click)="addPlayer()">Add</div>
 </div>

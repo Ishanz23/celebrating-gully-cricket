@@ -1,56 +1,40 @@
-import { Component, OnInit } from "@angular/core";
-import {
-  AngularFirestore,
-  AngularFirestoreCollection
-} from "@angular/fire/firestore";
-import { Player } from "./player";
+import { Component, OnInit } from '@angular/core'
+import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore'
+import { Player } from './player'
+import { MatSnackBar, MatSnackBarVerticalPosition, MatSnackBarHorizontalPosition } from '@angular/material/snack-bar'
 
 @Component({
-  selector: "app-players",
-  templateUrl: "./players.component.html",
-  styleUrls: ["./players.component.scss"]
+  selector: 'app-players',
+  templateUrl: './players.component.html',
+  styleUrls: ['./players.component.scss']
 })
 export class PlayersComponent implements OnInit {
-  loading = true;
-  playersCollection: AngularFirestoreCollection<Player>;
-  players: any[] = [];
-  constructor(private afStore: AngularFirestore) {}
+  loading = true
+  playersCollection: AngularFirestoreCollection<Player>
+  players: any[] = []
+  constructor(private afs: AngularFirestore, private _snackBar: MatSnackBar) {}
 
   ngOnInit() {
-    this.playersCollection = this.afStore.collection<Player>("players");
-    this.playersCollection
-      .valueChanges({ idField: "id" })
-      .subscribe(players => {
-        this.loading = false;
-        this.players = players;
-      });
-    // this.playersCollection
-    //   .doc<Player>("cYI7uRSkhhRTJ64jC87i")
-    //   .valueChanges()
-    //   .subscribe(player => {
-    //     console.log(player.tournaments[0].tournmanent);
-    //     this.afStore
-    //       .doc(player.tournaments[0].tournmanent)
-    //       .valueChanges()
-    //       .subscribe(data => console.log(data));
-    //   });
+    this.playersCollection = this.afs.collection<Player>('players', ref => ref.orderBy('firstName'))
+    this.playersCollection.valueChanges({ idField: 'id' }).subscribe(players => {
+      this.loading = false
+      this.players = players
+    })
   }
 
   addPlayer() {
-    this.playersCollection.doc("sumit-das").set({
-      firstName: "Sumit",
-      lastName: "Das",
-      nickName: "Subho",
-      battingOrientation: "right",
-      bowlingOrientation: "right",
-      specialization: "all-rounder",
-      address: "Sarsuna",
-      mobile: "8961382295",
+    this.playersCollection.doc('sumit-das').set({
+      firstName: 'Sumit',
+      lastName: 'Das',
+      nickName: 'Subho',
+      battingOrientation: 'right',
+      bowlingOrientation: 'right',
+      specialization: 'all-rounder',
+      address: 'Sarsuna',
+      mobile: '8961382295',
       tournaments: [
         {
-          tournmanent: this.afStore
-            .collection("tournaments")
-            .doc("para-cricket-league-2020").ref
+          tournmanent: this.afs.collection('tournaments').doc('para-cricket-league-2020').ref
         }
       ],
       career: {
@@ -70,6 +54,33 @@ export class PlayersComponent implements OnInit {
         stumpings: 0,
         wickets: 0
       }
-    });
+    })
+  }
+  modify(event: Event, player: Player) {
+    this.openSnackBar(`Coming Soon!`)
+  }
+
+  delete(event: Event, player: Player) {
+    this.playersCollection
+      .doc(player.id)
+      .delete()
+      .then(done => this.openSnackBar(`${player.firstName} ${player.lastName} data deleted`))
+      .catch(err => this.openSnackBar(`Failed to delete ${player.firstName} ${player.lastName} data.`))
+  }
+
+  private openSnackBar(
+    message: string,
+    action: string = '',
+    duration: number = 2000,
+    panelClass = 'accent',
+    verticalPosition: MatSnackBarVerticalPosition = 'bottom',
+    horizontalPosition: MatSnackBarHorizontalPosition = 'center'
+  ) {
+    this._snackBar.open(message, action, {
+      duration,
+      panelClass,
+      verticalPosition,
+      horizontalPosition
+    })
   }
 }

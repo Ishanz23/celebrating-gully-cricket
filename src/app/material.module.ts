@@ -7,6 +7,10 @@ import { MatInputModule } from '@angular/material/input'
 import { MatButtonModule } from '@angular/material/button'
 import { MatRadioModule } from '@angular/material/radio'
 import { MatTabsModule } from '@angular/material/tabs'
+import { MatCheckboxModule } from '@angular/material/checkbox'
+import { MatSnackBarModule } from '@angular/material/snack-bar'
+import { MatExpansionModule } from '@angular/material/expansion'
+
 @NgModule({
   imports: [],
   exports: [
@@ -17,7 +21,10 @@ import { MatTabsModule } from '@angular/material/tabs'
     MatInputModule,
     MatButtonModule,
     MatRadioModule,
-    MatTabsModule
+    MatTabsModule,
+    MatCheckboxModule,
+    MatSnackBarModule,
+    MatExpansionModule
   ],
   declarations: [],
   providers: []

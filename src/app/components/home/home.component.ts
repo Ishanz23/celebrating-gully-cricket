@@ -8,12 +8,17 @@ import { Observable } from 'rxjs'
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  tournaments$: Observable<any[]>
+  tournaments: any[]
+  loading = true
   constructor(private afStore: AngularFirestore) {}
 
   ngOnInit() {
-    this.tournaments$ = this.afStore
+    this.afStore
       .collection('tournaments')
       .valueChanges({ idField: 'id' })
+      .subscribe(tournaments => {
+        this.loading = false
+        this.tournaments = tournaments
+      })
   }
 }

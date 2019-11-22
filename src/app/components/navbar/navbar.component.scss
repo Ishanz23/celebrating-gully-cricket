@@ -18,6 +18,7 @@ nav {
     outline: none;
     padding-left: 1rem;
     transition: all 0.3s ease-in-out;
+    z-index: 9;
   }
   .logo:hover {
     color: $hover-accent-color;
@@ -28,12 +29,12 @@ nav {
     right: 0;
     bottom: 8vh;
     height: 92vh;
-    width: 50%;
+    width: 100%;
     flex-direction: column;
     justify-content: space-evenly;
     background: $nav-background-color;
     align-items: center;
-    transform: translateX(100%);
+    transform: translateY(100vh);
     transition: transform 0.5s ease;
     li {
       width: 100%;
@@ -46,7 +47,7 @@ nav {
       letter-spacing: 4px;
       text-transform: uppercase;
       outline: none;
-      padding: 0.5rem 0rem;
+      padding: 1rem 0rem;
       transition: all 0.3s ease-in-out;
       border-left: 3px solid transparent;
     }
@@ -61,7 +62,7 @@ nav {
     }
   }
   .opened {
-    transform: translateX(0%);
+    transform: translateY(0%);
   }
   .hamburger {
     width: 24px;
@@ -137,6 +138,7 @@ nav {
         align-items: center;
         border-bottom: 2px solid transparent;
         border-left: none;
+        padding: 0.5rem 0rem;
       }
       .active-link {
         border-bottom: 2px solid $hover-accent-color;

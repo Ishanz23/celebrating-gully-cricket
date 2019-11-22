@@ -1,15 +1,59 @@
+@import '~src/styles';
 .players-container {
   position: relative;
   width: 100%;
   height: 100%;
+  overflow: auto;
+}
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
 }
 .players {
+  width: 100%;
+  height: 100%;
   padding: 1rem;
-  .player {
-    color: #ececec;
-    font-weight: bold;
-    letter-spacing: 0.125rem;
-    margin: 1rem 0rem;
+  mat-expansion-panel {
+    margin: 0.5rem 0rem;
+  }
+  .player-details {
+    width: 100%;
+    color: $primary-text-color;
+    margin-top: 1rem;
+    .actions {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 0rem;
+      justify-content: flex-end;
+      .modify-button {
+        background-color: $green-button-color;
+      }
+      .delete-button {
+        margin-left: 1rem;
+      }
+    }
+    .item {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      margin: 0.5rem 0rem;
+      padding: 0.5rem;
+      background: $p-background-color;
+      .caption {
+        width: 50%;
+        color: $caption-text-color;
+        letter-spacing: 0.125rem;
+        font-size: 0.875rem;
+        font-weight: bold;
+      }
+      .data {
+        font-size: 0.875rem;
+        letter-spacing: 0.125rem;
+      }
+    }
   }
 }
 .add-player {
@@ -21,7 +65,7 @@
   width: 5rem;
   height: 5rem;
   background: #e94dad;
-  color: #ececec;
+  color: $primary-text-color;
   padding: 1rem;
   border-radius: 50%;
   box-shadow: 1px 2px 4px #83342e;
