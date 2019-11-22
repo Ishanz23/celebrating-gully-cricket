@@ -1,8 +1,26 @@
 <div class="players-container">
   <div class="players">
-    <div class="player" *ngFor="let player of players">
-      <span>{{ player.firstName }} {{ player.lastName }} {{ player.nickName ? '(' + player.nickName + ')' : '' }}</span>
-    </div>
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let player of players">
+        <mat-expansion-panel-header>
+          <mat-panel-title> {{ player.firstName }} {{ player.lastName }} </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="player-details">
+          <p *ngIf="player.nickName">
+            <span class="caption">Nickname:</span> <span class="data">{{ player.nickName }}</span>
+          </p>
+          <p>
+            <span class="caption">Mobile:</span> <span class="data">{{ player.mobile }}</span>
+          </p>
+          <p>
+            <span class="caption">Year Of Birth:</span> <span class="data">{{ player.yearOfBirth }}</span>
+          </p>
+          <p *ngIf="player.address">
+            <span class="caption">Address:</span> <span class="data">{{ player.address }}</span>
+          </p>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
   </div>
   <div class="players" *ngIf="loading">
     <app-loader radius="medium"></app-loader>

@@ -9,6 +9,7 @@ import { MatRadioModule } from '@angular/material/radio'
 import { MatTabsModule } from '@angular/material/tabs'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
+import { MatExpansionModule } from '@angular/material/expansion'
 
 @NgModule({
   imports: [],
@@ -22,7 +23,8 @@ import { MatSnackBarModule } from '@angular/material/snack-bar'
     MatRadioModule,
     MatTabsModule,
     MatCheckboxModule,
-    MatSnackBarModule
+    MatSnackBarModule,
+    MatExpansionModule
   ],
   declarations: [],
   providers: []
