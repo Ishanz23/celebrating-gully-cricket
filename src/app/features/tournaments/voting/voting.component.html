@@ -1,0 +1,24 @@
+<div class="voting">
+  <div class="tournament">
+    <h2 *ngIf="tournament">{{ tournament?.name + ' (' + tournament?.season + ')' | uppercase }}</h2>
+  </div>
+  <mat-card class="candidates-panel">
+    <h4>Nominated Captains</h4>
+    <div class="candidates">
+      <div
+        class="candidate"
+        *ngFor="let candidate of candidates"
+        (click)="toggleSelection($event, candidate)"
+        [ngClass]="{ active: candidate.selected }"
+      >
+        <span>{{ candidate.firstName }} {{ candidate.lastName }}</span>
+        <mat-icon [ngClass]="{ close: candidate.selected }">add_circle</mat-icon>
+      </div>
+      <app-loader *ngIf="candidates.length < 1" class="loader"></app-loader>
+    </div>
+    <div class="actions">
+      <button mat-raised-button color="accent" (click)="vote($event)" class="vote">Vote</button>
+      <button mat-raised-button color="warn" (click)="reset($event)">Clear</button>
+    </div>
+  </mat-card>
+</div>

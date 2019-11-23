@@ -9,6 +9,7 @@
   padding: 1rem;
   color: $primary-text-color;
   border-radius: 0.5rem;
+  scroll-snap-align: start;
   .header {
     width: 100%;
     display: flex;
@@ -63,7 +64,7 @@
     }
     .teams {
       grid-column: 1 / 1;
-      grid-row: 2 / 2;
+      grid-row: 3 / 3;
     }
     .schedule {
       grid-column: 2 / 2;
@@ -71,7 +72,7 @@
     }
     .vote {
       grid-column: 1 / 1;
-      grid-row: 3 / 3;
+      grid-row: 2 / 2;
     }
     .dashboard {
       grid-column: 2 / 2;

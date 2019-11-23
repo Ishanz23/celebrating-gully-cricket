@@ -161,8 +161,9 @@ export class EnrollPlayerComponent implements OnInit, OnDestroy {
                   this.openSnackBar(
                     this.registeredPlayerForm.value.player.firstName +
                       ' ' +
-                      this.registeredPlayerForm.value.player.lastName,
-                    'Enrolled!'
+                      this.registeredPlayerForm.value.player.lastName +
+                      ' enrolled',
+                    ''
                   )
                 })
                 .catch(err => this.openSnackBar(err, 'Error!'))
@@ -192,6 +193,55 @@ export class EnrollPlayerComponent implements OnInit, OnDestroy {
       this.newPlayerForm.reset()
     } else {
       this.registeredPlayerForm.reset()
+    }
+  }
+
+  leave($event: Event) {
+    if (
+      this.registeredPlayerForm.valid &&
+      this.registeredPlayerForm.value.player.pin === this.registeredPlayerForm.value.pin
+    ) {
+      this.tournamentDocument.get().subscribe(doc => {
+        if (doc.exists) {
+          const tournament = doc.data()
+          const does_player_exist = tournament.players.find(
+            player => player.player.id == this.registeredPlayerForm.value.player.id
+          )
+          if (does_player_exist) {
+            this.tournamentDocument
+              .update({
+                players: firebase.firestore.FieldValue.arrayRemove({
+                  player: this.playersCollection.doc(this.registeredPlayerForm.value.player.id).ref,
+                  isNominated: this.registeredPlayerForm.value.captaincy,
+                  count: 0
+                })
+              })
+              .then(data => {
+                this.openSnackBar(
+                  this.registeredPlayerForm.value.player.firstName +
+                    ' ' +
+                    this.registeredPlayerForm.value.player.lastName +
+                    ' left',
+                  ''
+                )
+              })
+              .catch(err => this.openSnackBar(err, 'Error!'))
+              .finally(() => (this.loading = false))
+            this.playersCollection.doc(this.registeredPlayerForm.value.player.id).update({
+              tournaments: firebase.firestore.FieldValue.arrayRemove(this.tournamentDocument.ref)
+            })
+          } else {
+            this.loading = false
+            this.openSnackBar('Player is not enrolled!', '')
+          }
+        } else {
+          this.loading = false
+          this.openSnackBar('Something went wrong :(', 'Error!')
+        }
+      })
+    } else {
+      this.loading = false
+      this.openSnackBar('Incorrect pin', 'Error!')
     }
   }
 

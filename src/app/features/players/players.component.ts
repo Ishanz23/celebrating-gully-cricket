@@ -38,6 +38,7 @@ export class PlayersComponent implements OnInit, OnDestroy {
   }
 
   confirmDelete(event: Event, player: Player) {
+    // this.openSnackBar(`Tell the admin`)
     player.tournaments.forEach(tournament => {
       tournament.get().then(doc => {
         if (doc.exists) {

@@ -10,6 +10,9 @@ import { MatTabsModule } from '@angular/material/tabs'
 import { MatCheckboxModule } from '@angular/material/checkbox'
 import { MatSnackBarModule } from '@angular/material/snack-bar'
 import { MatExpansionModule } from '@angular/material/expansion'
+import { MatChipsModule } from '@angular/material/chips'
+import { MatIconModule } from '@angular/material/icon'
+import { MatCardModule } from '@angular/material/card'
 
 @NgModule({
   imports: [],
@@ -24,7 +27,10 @@ import { MatExpansionModule } from '@angular/material/expansion'
     MatTabsModule,
     MatCheckboxModule,
     MatSnackBarModule,
-    MatExpansionModule
+    MatExpansionModule,
+    MatChipsModule,
+    MatIconModule,
+    MatCardModule
   ],
   declarations: [],
   providers: []

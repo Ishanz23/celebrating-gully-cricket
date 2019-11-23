@@ -3,6 +3,7 @@
   height: 100%;
   overflow: auto;
   position: relative;
+  scroll-snap-type: y mandatory;
 }
 .loader {
   position: absolute;

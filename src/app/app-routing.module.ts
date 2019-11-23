@@ -10,19 +10,19 @@ const routes: Routes = [
   },
   {
     path: 'tournaments',
-    loadChildren: () =>
-      import('./features/tournaments/tournaments.module').then(
-        m => m.TournamentsModule
-      )
+    loadChildren: () => import('./features/tournaments/tournaments.module').then(m => m.TournamentsModule)
   },
   {
     path: 'players',
-    loadChildren: () =>
-      import('./features/players/players.module').then(m => m.PlayersModule)
+    loadChildren: () => import('./features/players/players.module').then(m => m.PlayersModule)
   },
   {
     path: 'enroll',
     redirectTo: 'tournaments/enroll'
+  },
+  {
+    path: 'vote',
+    redirectTo: 'tournaments/vote'
   }
 ]
 

@@ -1,8 +1,8 @@
 <div class="home">
-  <div class="tournaments" *ngIf="loading">
+  <ng-container class="tournaments" *ngIf="loading">
     <app-loader radius="medium"></app-loader>
-  </div>
-  <div class="tournaments" *ngIf="!loading && tournaments && tournaments.length > 0">
+  </ng-container>
+  <ng-container class="tournaments" *ngIf="!loading && tournaments && tournaments.length > 0">
     <app-tournament-panel *ngFor="let tournament of tournaments" [tournament]="tournament"></app-tournament-panel>
-  </div>
+  </ng-container>
 </div>

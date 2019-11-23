@@ -53,12 +53,15 @@ nav {
     }
     .active-link {
       font-weight: bold;
-      border-left: 3px solid #e631a0;
+      border-bottom: 3px solid $hover-accent-color;
+      border-top: 3px solid $hover-accent-color;
+      color: $hover-accent-color;
     }
     li:hover {
       color: $hover-accent-color;
       background: $nav-background-color;
-      border-left: 3px solid #e631a0;
+      border-bottom: 3px solid $hover-accent-color;
+      border-top: 3px solid $hover-accent-color;
     }
   }
   .opened {
@@ -142,13 +145,12 @@ nav {
       }
       .active-link {
         border-bottom: 2px solid $hover-accent-color;
-        border-left: none;
-        color: $hover-accent-color;
+        border-top: none;
       }
       li:hover {
         background: #0f1830;
         border-bottom: 2px solid $hover-accent-color;
-        border-left: none;
+        border-top: none;
       }
     }
     .hamburger {
