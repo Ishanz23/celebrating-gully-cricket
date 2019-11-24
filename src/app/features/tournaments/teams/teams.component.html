@@ -1,0 +1,54 @@
+<div class="players-container">
+  <div class="tournament" [routerLink]="'/tournaments'" *ngIf="tournament">
+    <h4>{{ tournament?.name | uppercase }}</h4>
+    <p>{{ tournament.startDate.seconds * 1000 | date: 'MMM d, y' }}</p>
+  </div>
+  <div class="players">
+    <mat-accordion>
+      <mat-expansion-panel *ngFor="let player of players">
+        <mat-expansion-panel-header>
+          <mat-panel-title> {{ player.firstName }} {{ player.lastName }} </mat-panel-title>
+        </mat-expansion-panel-header>
+        <div class="player-details">
+          <div *ngIf="player.nickName" class="item">
+            <span class="caption">Nickname:</span> <span class="data">{{ player.nickName }}</span>
+          </div>
+          <div class="item">
+            <span class="caption">Mobile:</span> <span class="data">{{ player.mobile }}</span>
+          </div>
+          <div class="item" *ngIf="player.yearOfBirth">
+            <span class="caption">Year Of Birth:</span> <span class="data">{{ player.yearOfBirth }}</span>
+          </div>
+          <div *ngIf="player.address" class="item">
+            <span class="caption">Address:</span> <span class="data">{{ player.address }}</span>
+          </div>
+          <div class="actions">
+            <ng-container *ngIf="deletionActive != player.id">
+              <button mat-flat-button color="warn" (click)="deletionActive = player.id" class="delete-button">
+                Leave
+              </button>
+            </ng-container>
+            <ng-container *ngIf="deletionActive == player.id">
+              <span class="message">Leave {{ tournament.name }}?</span>
+              <button
+                mat-flat-button
+                (click)="confirmLeave($event, player)"
+                class="delete-button prompt"
+                [disabled]="loading"
+                color="warn"
+              >
+                Yes
+              </button>
+              <button mat-flat-button (click)="deletionActive = null" class="modify-button prompt">
+                No
+              </button>
+            </ng-container>
+          </div>
+        </div>
+      </mat-expansion-panel>
+    </mat-accordion>
+  </div>
+  <div class="loader" *ngIf="loading">
+    <app-loader radius="medium"></app-loader>
+  </div>
+</div>

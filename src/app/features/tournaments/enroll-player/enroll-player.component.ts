@@ -7,6 +7,7 @@ import { Player } from '../../players/player'
 import { MatSnackBar, MatSnackBarVerticalPosition, MatSnackBarHorizontalPosition } from '@angular/material/snack-bar'
 import { Subscription } from 'rxjs'
 import { take } from 'rxjs/operators'
+import { Tournamnent } from '../tournament.model'
 
 @Component({
   selector: 'app-enroll-player',
@@ -16,7 +17,7 @@ import { take } from 'rxjs/operators'
 export class EnrollPlayerComponent implements OnInit, OnDestroy {
   playersCollection: AngularFirestoreCollection<Player>
   tournament_id: string
-  tournament: any
+  tournament: Tournamnent
   tournamentDocument: AngularFirestoreDocument<any>
   searchText = new FormControl()
   registeredPlayerPin = new FormControl()
@@ -32,9 +33,9 @@ export class EnrollPlayerComponent implements OnInit, OnDestroy {
     firstName: [null, Validators.required],
     lastName: [null],
     nickName: [null],
-    address: [null],
+    address: ['Kolkata'],
     mobile: [null, [Validators.required, Validators.maxLength(10)]],
-    yearOfBirth: [null, [Validators.required, Validators.maxLength(4)]],
+    yearOfBirth: [null],
     pin: [null, [Validators.required, Validators.maxLength(4)]],
     battingOrientation: ['right'],
     bowlingOrientation: ['right'],

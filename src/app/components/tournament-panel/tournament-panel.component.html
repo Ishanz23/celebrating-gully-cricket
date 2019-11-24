@@ -1,14 +1,14 @@
 <section class="tournament-panel">
   <div class="header">
     <h1 class="title">{{ tournament.name }}</h1>
-    <h4 class="season">{{ tournament.season }}</h4>
+    <h4 class="season" *ngIf="tournament.startDate">{{ tournament?.startDate.seconds * 1000 | date: 'MMM d, y' }}</h4>
   </div>
   <div class="actions">
     <div class="enroll button" (click)="navigate($event, 'enroll')">
       <span>Enroll</span>
     </div>
     <div class="vote button" (click)="navigate($event, 'vote')"><span>Vote</span></div>
-    <div class="teams button" (click)="showComingSoon()"><span>Teams</span></div>
+    <div class="teams button" (click)="navigate($event, 'teams')"><span>Players</span></div>
     <div class="schedule button" (click)="showComingSoon()"><span>Schedule</span></div>
     <div class="dashboard button" (click)="showComingSoon()"><span>Dashboard</span></div>
   </div>

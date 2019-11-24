@@ -10,6 +10,7 @@ export interface Player {
   specialization: string
   address: string
   mobile: string
+  yearOfBirth?: number
   career: Career
   tournaments?: firebase.firestore.DocumentReference[]
 }

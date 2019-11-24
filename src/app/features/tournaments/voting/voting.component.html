@@ -1,6 +1,7 @@
 <div class="voting">
-  <div class="tournament">
-    <h2 *ngIf="tournament">{{ tournament?.name + ' (' + tournament?.season + ')' | uppercase }}</h2>
+  <div class="tournament" [routerLink]="'/tournaments'">
+    <h4>{{ tournament?.name | uppercase }}</h4>
+    <p>{{ tournament?.startDate.seconds * 1000 | date: 'MMM d, y' }}</p>
   </div>
   <mat-card class="candidates-panel">
     <h4>Nominated Captains</h4>
@@ -15,6 +16,9 @@
         <mat-icon [ngClass]="{ close: candidate.selected }">add_circle</mat-icon>
       </div>
       <app-loader *ngIf="candidates.length < 1" class="loader"></app-loader>
+    </div>
+    <div class="message">
+      <span>Select four captains of your choice</span>
     </div>
     <div class="actions">
       <button mat-raised-button color="accent" (click)="vote($event)" class="vote">Vote</button>

@@ -23,6 +23,10 @@ const routes: Routes = [
   {
     path: 'vote',
     redirectTo: 'tournaments/vote'
+  },
+  {
+    path: 'teams',
+    redirectTo: 'tournaments/teams'
   }
 ]
 

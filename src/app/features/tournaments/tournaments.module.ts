@@ -7,10 +7,11 @@ import { SharedModule } from 'src/app/components/shared.module'
 import { EnrollPlayerComponent } from './enroll-player/enroll-player.component'
 import { MatSelectModule } from '@angular/material/select'
 import { MaterialModule } from 'src/app/material.module';
-import { VotingComponent } from './voting/voting.component'
+import { VotingComponent } from './voting/voting.component';
+import { TeamsComponent } from './teams/teams.component'
 
 @NgModule({
-  declarations: [TournamentsComponent, EnrollPlayerComponent, VotingComponent],
+  declarations: [TournamentsComponent, EnrollPlayerComponent, VotingComponent, TeamsComponent],
   imports: [
     CommonModule,
     TournamentsRoutingModule,

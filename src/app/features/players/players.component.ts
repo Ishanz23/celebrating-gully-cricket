@@ -3,7 +3,7 @@ import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument 
 import { Player } from './player'
 import { MatSnackBar, MatSnackBarVerticalPosition, MatSnackBarHorizontalPosition } from '@angular/material/snack-bar'
 import { Subscription } from 'rxjs'
-import * as firebase from 'firebase'
+import { environment } from 'src/environments/environment'
 
 @Component({
   selector: 'app-players',
@@ -38,27 +38,30 @@ export class PlayersComponent implements OnInit, OnDestroy {
   }
 
   confirmDelete(event: Event, player: Player) {
-    // this.openSnackBar(`Tell the admin`)
-    player.tournaments.forEach(tournament => {
-      tournament.get().then(doc => {
-        if (doc.exists) {
-          const players = doc.data().players
-          tournament.update({
-            players: players.filter(playerRef => playerRef.player.id !== player.id)
-          })
-        }
+    if (environment.production) {
+      this.openSnackBar(`Contact the admin`)
+    } else {
+      player.tournaments.forEach(tournament => {
+        tournament.get().then(doc => {
+          if (doc.exists) {
+            const players = doc.data().players
+            tournament.update({
+              players: players.filter(playerRef => playerRef.player.id !== player.id)
+            })
+          }
+        })
       })
-    })
-    this.playersCollection
-      .doc(player.id)
-      .delete()
-      .then(done => {
-        this.openSnackBar(`Data of ${player.firstName} ${player.lastName} deleted`)
-      })
-      .catch(err => {
-        console.error(err)
-        this.openSnackBar(`Failed to delete data of ${player.firstName} ${player.lastName}`)
-      })
+      this.playersCollection
+        .doc(player.id)
+        .delete()
+        .then(done => {
+          this.openSnackBar(`Data of ${player.firstName} ${player.lastName} deleted`)
+        })
+        .catch(err => {
+          console.error(err)
+          this.openSnackBar(`Failed to delete data of ${player.firstName} ${player.lastName}`)
+        })
+    }
   }
 
   private openSnackBar(

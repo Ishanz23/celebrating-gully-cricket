@@ -9,15 +9,20 @@
   padding: 1rem;
   .tournament {
     width: 100%;
-    height: 3rem;
+    min-height: 3rem;
     margin-bottom: 1rem;
     padding: 1rem;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-  }
-  h2 {
-    letter-spacing: 0.25rem;
+    cursor: pointer;
+    h4 {
+      letter-spacing: 0.25rem;
+    }
+    p {
+      padding-top: 0.5rem;
+    }
   }
   mat-form-field {
     width: 100%;
@@ -57,6 +62,7 @@
     .enroll-button {
       flex: 1;
       background-color: $green-button-color;
+      position: relative;
     }
     .reset-button {
       flex: 1;
@@ -64,8 +70,15 @@
     }
   }
 }
-.loading {
-  margin: 1rem;
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.blur {
+  opacity: 0.2;
+  pointer-events: none;
 }
 
 @media screen and (min-width: 720px) {

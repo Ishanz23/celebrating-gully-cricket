@@ -1,5 +1,5 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore'
+import { AngularFirestore, AngularFirestoreDocument } from '@angular/fire/firestore'
 import { ActivatedRoute } from '@angular/router'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import * as firebase from 'firebase'
@@ -34,7 +34,6 @@ export class VotingComponent implements OnInit, OnDestroy {
     this.subscriptions.add(
       this.tournamentDocument.valueChanges().subscribe(tournament => {
         this.tournament = { id: this.tournament_id, ...tournament }
-        console.log(this.tournament.players)
         this.candidateRefs = this.tournament.players.filter(player => player.isNominated)
         for (const playerRef of this.candidateRefs) {
           playerRef.player.get().then(doc => {
@@ -45,7 +44,6 @@ export class VotingComponent implements OnInit, OnDestroy {
         }
       })
     )
-    // this.playersCollection = this.afs.collection<Player>('tournaments', ref => ref.where('players', ''))
   }
 
   ngOnDestroy() {
@@ -62,7 +60,7 @@ export class VotingComponent implements OnInit, OnDestroy {
   }
 
   vote(event: Event) {
-    this._snackBar.open('Coming Soon!', '', { panelClass: 'accent', duration: 2000 })
+    this._snackBar.open("Voting hasn't started yet!", '', { panelClass: 'accent', duration: 2000 })
   }
   reset(event: Event) {
     this.candidates.forEach(candidate => (candidate.selected = false))

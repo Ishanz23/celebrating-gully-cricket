@@ -1,6 +1,7 @@
-<div class="enroll">
-  <div class="tournament">
-    <h2 *ngIf="tournament">{{ tournament?.name + ' (' + tournament?.season + ')' | uppercase }}</h2>
+<div class="enroll" [ngClass]="{ blur: loading }">
+  <div class="tournament" [routerLink]="'/tournaments'" *ngIf="tournament">
+    <h4>{{ tournament?.name | uppercase }}</h4>
+    <p>{{ tournament.startDate.seconds * 1000 | date: 'MMM d, y' }}</p>
   </div>
   <mat-tab-group mat-stretch-tabs color="accent">
     <mat-tab label="New Players">
@@ -25,21 +26,21 @@
             <input matInput placeholder="Mobile No. *" formControlName="mobile" type="number" />
           </mat-form-field>
         </div>
-        <div class="year-of-birth">
+        <!-- <div class="year-of-birth">
           <mat-form-field>
             <input matInput placeholder="Year Of Birth *" type="number" formControlName="yearOfBirth" />
           </mat-form-field>
-        </div>
+        </div> -->
         <div class="nickname">
           <mat-form-field>
-            <input matInput placeholder="Nickname" formControlName="nickName" type="text" />
+            <input matInput placeholder="Nickname (Optional)" formControlName="nickName" type="text" />
           </mat-form-field>
         </div>
-        <div class="address">
+        <!-- <div class="address">
           <mat-form-field>
             <input matInput placeholder="Address" type="text" formControlName="address" type="text" />
           </mat-form-field>
-        </div>
+        </div> -->
         <div class="captaincy">
           <mat-checkbox formControlName="captaincy">Interested in captaincy</mat-checkbox>
         </div>
@@ -51,7 +52,7 @@
             class="enroll-button"
             [disabled]="loading"
           >
-            Enroll
+            <span *ngIf="!false">Enroll</span>
           </button>
           <button
             mat-raised-button
@@ -107,7 +108,7 @@
       </form>
     </mat-tab>
   </mat-tab-group>
-  <div class="loading" *ngIf="loading">
-    <app-loader radius="medium"></app-loader>
-  </div>
+</div>
+<div class="loader" *ngIf="loading">
+  <app-loader radius="medium"></app-loader>
 </div>

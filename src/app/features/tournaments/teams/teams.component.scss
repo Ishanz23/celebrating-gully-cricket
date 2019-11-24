@@ -1,0 +1,99 @@
+@import '~src/styles';
+.players-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  overflow: auto;
+  .tournament {
+    width: 100%;
+    min-height: 3rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    h4 {
+      letter-spacing: 0.25rem;
+    }
+    p {
+      padding-top: 0.5rem;
+    }
+  }
+}
+.loader {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translateX(-50%);
+}
+.players {
+  width: 100%;
+  height: 100%;
+  padding: 1rem;
+  mat-expansion-panel {
+    margin: 0.5rem 0rem;
+  }
+  .player-details {
+    width: 100%;
+    color: $primary-text-color;
+    margin-top: 1rem;
+    .actions {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 0rem;
+      justify-content: space-between;
+      .message {
+        color: $caption-text-color;
+        letter-spacing: 0.125rem;
+      }
+      button {
+        width: 45%;
+      }
+      .modify-button {
+        background-color: $green-button-color;
+      }
+      .prompt {
+        width: 20%;
+      }
+    }
+    .item {
+      width: 100%;
+      display: flex;
+      align-items: center;
+      margin: 0.5rem 0rem;
+      padding: 0.5rem;
+      background: $p-background-color;
+      .caption {
+        width: 50%;
+        color: $pink-button-color;
+        letter-spacing: 0.125rem;
+        font-size: 0.875rem;
+        font-weight: bold;
+      }
+      .data {
+        font-size: 0.875rem;
+        letter-spacing: 0.125rem;
+      }
+    }
+  }
+}
+
+@media screen and (min-width: 720px) {
+  .players {
+    .player-details {
+      margin-top: 2rem;
+      .actions {
+        justify-content: flex-end;
+        button {
+          width: 20%;
+          margin-left: 1rem;
+        }
+        .prompt {
+          width: 10%;
+        }
+      }
+    }
+  }
+}

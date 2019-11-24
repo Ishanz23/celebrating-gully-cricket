@@ -14,10 +14,15 @@
     margin-bottom: 1rem;
     padding: 1rem;
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    h2 {
+    cursor: pointer;
+    h4 {
       letter-spacing: 0.25rem;
+    }
+    p {
+      padding-top: 0.5rem;
     }
   }
   .candidates-panel {
