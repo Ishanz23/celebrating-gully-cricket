@@ -6,3 +6,10 @@ main {
   background-size: cover;
   background-position: center;
 }
+
+mat-progress-bar {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 99;
+}

@@ -41,7 +41,6 @@ $caption-text-color: #f44336;
 $p-background-color: #505050;
 * {
   margin: 0px;
-  padding: 0px;
   box-sizing: border-box;
   color: #ececec;
 }
@@ -66,4 +65,8 @@ body {
 
 .accent {
   background: $hover-accent-color;
+}
+.blocked {
+  pointer-events: none;
+  opacity: 0.4;
 }

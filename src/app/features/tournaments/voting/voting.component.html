@@ -6,22 +6,35 @@
   <mat-card class="candidates-panel">
     <h4>Nominated Captains</h4>
     <div class="candidates">
-      <div
-        class="candidate"
-        *ngFor="let candidate of candidates"
-        (click)="toggleSelection($event, candidate)"
-        [ngClass]="{ active: candidate.selected }"
-      >
-        <span>{{ candidate.firstName }} {{ candidate.lastName }}</span>
-        <mat-icon [ngClass]="{ close: candidate.selected }">add_circle</mat-icon>
-      </div>
+      <ng-container *ngFor="let candidate of candidates">
+        <div
+          class="candidate"
+          *ngIf="candidate.isNominated"
+          [ngClass]="{
+            active: candidate.selected,
+            blocked: !candidate.selected && captain_selection_done
+          }"
+          (click)="toggleSelection($event, candidate)"
+        >
+          <span>{{ candidate.firstName }} {{ candidate.lastName }}</span>
+          <mat-icon [ngClass]="{ close: candidate.selected }">add_circle</mat-icon>
+        </div>
+      </ng-container>
       <app-loader *ngIf="candidates.length < 1" class="loader"></app-loader>
     </div>
     <div class="message">
-      <span>Select four captains of your choice</span>
+      <span>Select {{ tournament?.noOfTeams || 4 }} captains of your choice</span>
     </div>
     <div class="actions">
-      <button mat-raised-button color="accent" (click)="vote($event)" class="vote">Vote</button>
+      <button
+        mat-raised-button
+        color="accent"
+        (click)="vote($event)"
+        class="vote"
+        [ngClass]="{ blocked: selectedCandidates.length < (tournament?.noOfTeams || 4) }"
+      >
+        Vote
+      </button>
       <button mat-raised-button color="warn" (click)="reset($event)">Clear</button>
     </div>
   </mat-card>

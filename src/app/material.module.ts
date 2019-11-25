@@ -14,6 +14,7 @@ import { MatChipsModule } from '@angular/material/chips'
 import { MatIconModule } from '@angular/material/icon'
 import { MatCardModule } from '@angular/material/card'
 import { MatProgressBarModule } from '@angular/material/progress-bar'
+import { MatBottomSheetModule } from '@angular/material/bottom-sheet'
 
 @NgModule({
   imports: [],
@@ -32,7 +33,8 @@ import { MatProgressBarModule } from '@angular/material/progress-bar'
     MatChipsModule,
     MatIconModule,
     MatCardModule,
-    MatProgressBarModule
+    MatProgressBarModule,
+    MatBottomSheetModule
   ],
   declarations: [],
   providers: []

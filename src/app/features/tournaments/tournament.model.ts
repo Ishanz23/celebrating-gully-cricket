@@ -10,6 +10,7 @@ export interface Tournamnent {
   startDate?: firebase.firestore.Timestamp
   endDate?: firebase.firestore.Timestamp
   duration?: number
+  noOfTeams?: number
   players: {
     count: number
     isNominated: boolean

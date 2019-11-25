@@ -26,10 +26,15 @@
     }
   }
   .candidates-panel {
+    display: flex;
+    flex-direction: column;
     width: 100%;
     padding: 1rem;
     background: $panel-color;
-    text-align: center;
+    align-items: center;
+    justify-content: space-between;
+    flex: 1;
+    overflow: auto;
     h4 {
       letter-spacing: 0.25rem;
       text-transform: uppercase;
@@ -40,6 +45,7 @@
       display: flex;
       align-items: center;
       flex-wrap: wrap;
+      flex: 1;
       .loader {
         position: absolute;
         top: 50%;
