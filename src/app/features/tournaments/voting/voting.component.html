@@ -3,7 +3,7 @@
     <h4>{{ tournament?.name | uppercase }}</h4>
     <p>{{ tournament?.startDate.seconds * 1000 | date: 'MMM d, y' }}</p>
   </div>
-  <mat-card class="candidates-panel">
+  <mat-card class="candidates-panel" *ngIf="authenticated" [ngClass]="{ blocked: loading }">
     <h4>Nominated Captains</h4>
     <div class="candidates">
       <ng-container *ngFor="let candidate of candidates">
@@ -33,9 +33,45 @@
         class="vote"
         [ngClass]="{ blocked: selectedCandidates.length < (tournament?.noOfTeams || 4) }"
       >
-        Vote
+        Submit
       </button>
       <button mat-raised-button color="warn" (click)="reset($event)">Clear</button>
     </div>
   </mat-card>
+  <mat-card class="check-credentials" *ngIf="!authenticated">
+    <form class="registered" [formGroup]="playerForm">
+      <mat-form-field>
+        <input
+          type="text"
+          placeholder="Search *"
+          aria-label="Search"
+          matInput
+          formControlName="player"
+          [matAutocomplete]="auto"
+        />
+        <mat-autocomplete #auto="matAutocomplete" [displayWith]="displayFn">
+          <mat-option *ngFor="let player of candidates" [value]="player">
+            {{ player.firstName + ' ' + player.lastName }}
+          </mat-option>
+        </mat-autocomplete>
+      </mat-form-field>
+      <mat-form-field>
+        <input matInput placeholder="Pin *" type="password" formControlName="pin" />
+      </mat-form-field>
+      <div class="actions">
+        <button
+          mat-raised-button
+          color="primary"
+          (click)="selectPlayer($event)"
+          class="vote-button"
+          [ngClass]="{ blocked: playerForm.invalid || loading }"
+        >
+          Vote
+        </button>
+      </div>
+    </form>
+  </mat-card>
+</div>
+<div class="loader" *ngIf="loading">
+  <app-loader radius="medium"></app-loader>
 </div>

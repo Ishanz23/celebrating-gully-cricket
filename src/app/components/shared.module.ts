@@ -4,7 +4,6 @@ import { LoaderComponent } from './loader/loader.component'
 import { TournamentPanelComponent } from './tournament-panel/tournament-panel.component'
 import { CommonModule } from '@angular/common'
 import { RouterModule } from '@angular/router'
-import { MatSelectModule } from '@angular/material/select'
 import { MaterialModule } from '../material.module'
 
 @NgModule({

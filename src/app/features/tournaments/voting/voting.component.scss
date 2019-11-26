@@ -8,6 +8,24 @@
   flex-direction: column;
   align-items: center;
   padding: 1rem;
+  .check-credentials {
+    width: 100%;
+    height: auto;
+    form {
+      width: 100%;
+      height: auto;
+      mat-form-field {
+        width: 100%;
+      }
+      .actions {
+        width: 100%;
+        .vote-button {
+          width: 100%;
+          background: $green-button-color;
+        }
+      }
+    }
+  }
   .tournament {
     width: 100%;
     height: 3rem;

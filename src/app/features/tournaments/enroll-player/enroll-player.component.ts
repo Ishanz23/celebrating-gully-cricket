@@ -117,7 +117,8 @@ export class EnrollPlayerComponent implements OnInit, OnDestroy {
                       players: firebase.firestore.FieldValue.arrayUnion({
                         player: this.playersCollection.doc(data.id).ref,
                         isNominated: this.newPlayerForm.value.captaincy,
-                        count: 0
+                        count: 0,
+                        votes: []
                       })
                     })
                     .then(data => {
@@ -155,7 +156,8 @@ export class EnrollPlayerComponent implements OnInit, OnDestroy {
                   players: firebase.firestore.FieldValue.arrayUnion({
                     player: this.playersCollection.doc(this.registeredPlayerForm.value.player.id).ref,
                     isNominated: this.registeredPlayerForm.value.captaincy,
-                    count: 0
+                    count: 0,
+                    votes: []
                   })
                 })
                 .then(data => {
@@ -211,11 +213,9 @@ export class EnrollPlayerComponent implements OnInit, OnDestroy {
           if (does_player_exist) {
             this.tournamentDocument
               .update({
-                players: firebase.firestore.FieldValue.arrayRemove({
-                  player: this.playersCollection.doc(this.registeredPlayerForm.value.player.id).ref,
-                  isNominated: this.registeredPlayerForm.value.captaincy,
-                  count: 0
-                })
+                players: tournament.players.filter(
+                  playerRef => playerRef.player.id !== this.registeredPlayerForm.value.player.id
+                )
               })
               .then(data => {
                 this.openSnackBar(

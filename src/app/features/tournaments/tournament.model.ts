@@ -11,9 +11,11 @@ export interface Tournamnent {
   endDate?: firebase.firestore.Timestamp
   duration?: number
   noOfTeams?: number
-  players: {
-    count: number
-    isNominated: boolean
-    player: firebase.firestore.DocumentReference
-  }[]
+  players: TournamentPlayer[]
+}
+export interface TournamentPlayer {
+  count: number
+  isNominated: boolean
+  votes: string[]
+  player: firebase.firestore.DocumentReference
 }

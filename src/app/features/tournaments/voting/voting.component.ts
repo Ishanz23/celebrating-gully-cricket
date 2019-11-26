@@ -1,16 +1,18 @@
-import { Component, OnInit, OnDestroy } from '@angular/core'
+import { Component, OnInit, OnDestroy, ViewChild, ElementRef } from '@angular/core'
 import { AngularFirestore, AngularFirestoreDocument, DocumentReference } from '@angular/fire/firestore'
 import { ActivatedRoute } from '@angular/router'
 import { MatSnackBar } from '@angular/material/snack-bar'
 import * as firebase from 'firebase'
 import { Player } from '../../players/player'
 import { Subscription } from 'rxjs'
-import { Tournamnent } from '../tournament.model'
+import { Tournamnent, TournamentPlayer } from '../tournament.model'
+import { FormBuilder, Validators } from '@angular/forms'
 
 interface Candidate extends Player {
   count: number
   selected: boolean
   isNominated: boolean
+  votes: string[]
   player: firebase.firestore.DocumentReference
 }
 
@@ -20,8 +22,8 @@ interface Candidate extends Player {
   styleUrls: ['./voting.component.scss']
 })
 export class VotingComponent implements OnInit, OnDestroy {
-  candidateRefs: { count: number; isNominated: boolean; player: firebase.firestore.DocumentReference }[]
-  playerRefs: { count: number; isNominated: boolean; player: firebase.firestore.DocumentReference }[]
+  candidateRefs: TournamentPlayer[]
+  playerRefs: TournamentPlayer[]
   candidates: Candidate[] = []
   selectedCandidates: Candidate[] = []
   tournament_id: string
@@ -30,7 +32,19 @@ export class VotingComponent implements OnInit, OnDestroy {
   subscriptions = new Subscription()
   loading = false
   captain_selection_done = false
-  constructor(private activatedRoute: ActivatedRoute, private afs: AngularFirestore, private _snackBar: MatSnackBar) {}
+  authenticated = false
+  playerForm = this.fb.group({
+    player: [null, Validators.required],
+    pin: ['', [Validators.required, Validators.maxLength(4)]],
+    captaincy: [false]
+  })
+  @ViewChild('checkCredentials', { static: false }) checkCredentials: ElementRef<any>
+  constructor(
+    private fb: FormBuilder,
+    private activatedRoute: ActivatedRoute,
+    private afs: AngularFirestore,
+    private _snackBar: MatSnackBar
+  ) {}
 
   ngOnInit() {
     this.tournament_id = this.activatedRoute.snapshot.paramMap.get('id')
@@ -43,6 +57,7 @@ export class VotingComponent implements OnInit, OnDestroy {
         for (const playerRef of this.playerRefs) {
           playerRef.player.get().then(doc => {
             if (doc.exists) {
+              this.candidates = this.candidates.filter(c => c.id !== doc.id)
               this.candidates.push({
                 ...playerRef,
                 selected: false,
@@ -66,35 +81,43 @@ export class VotingComponent implements OnInit, OnDestroy {
     this.captain_selection_done = this.selectedCandidates.length == (this.tournament && this.tournament.noOfTeams)
   }
 
+  selectPlayer($event) {
+    if (this.playerForm.valid && this.playerForm.value.player.pin === this.playerForm.value.pin) {
+      this.authenticated = true
+    }
+  }
+
   vote(event: Event) {
+    const votes = this.selectedCandidates
+      .filter(candidate => candidate.selected && candidate.isNominated)
+      .map(candidate => ({ id: candidate.id }))
     this.loading = true
-    // this.candidates.forEach(c => {
-    //   console.log({
-    //     name: c.firstName,
-    //     count: c.count
-    //   })
-    // })
     this.tournamentDocument
       .update({
         players: this.candidates.map(player => ({
           count: player.selected && player.isNominated ? player.count + 1 : player.count,
           isNominated: player.isNominated,
-          player: player.player
+          player: player.player,
+          votes: this.playerForm.value.player.id == player.id ? votes : player.votes
         }))
       })
       .then(res => {
-        console.log(res)
+        this._snackBar.open('Thanks for voting!', '', { panelClass: 'accent', duration: 1500 })
       })
       .catch(err => {
         console.error(err)
+        this._snackBar.open('Something went wrong!', '', { panelClass: 'accent', duration: 1500 })
       })
-      .finally(() => (this.loading = false))
-    // this._snackBar.open("Voting hasn't started yet!", '', { panelClass: 'accent', duration: 2000 })
+      .finally(() => (this.loading = this.authenticated = false))
   }
   reset(event: Event) {
     this.candidates.forEach(candidate => (candidate.selected = false))
     this.selectedCandidates = []
-    this._snackBar.open('Votes Cleared!', '', { panelClass: 'accent', duration: 2000 })
+    this._snackBar.open('Votes Cleared!', '', { panelClass: 'accent', duration: 1500 })
+  }
+
+  displayFn(player?: Player): string | undefined {
+    return player ? player.firstName + ' ' + player.lastName : undefined
   }
 
   ngOnDestroy() {
