@@ -11,6 +11,7 @@ export interface Tournamnent {
   endDate?: firebase.firestore.Timestamp
   duration?: number
   noOfTeams?: number
+  votingOpen: boolean
   players: TournamentPlayer[]
 }
 export interface TournamentPlayer {

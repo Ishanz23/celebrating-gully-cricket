@@ -8,7 +8,7 @@ import { Subscription } from 'rxjs'
 import { Tournamnent, TournamentPlayer } from '../tournament.model'
 import { FormBuilder, Validators } from '@angular/forms'
 
-interface Candidate extends Player {
+export interface Candidate extends Player {
   count: number
   selected: boolean
   isNominated: boolean
@@ -83,32 +83,56 @@ export class VotingComponent implements OnInit, OnDestroy {
 
   selectPlayer($event) {
     if (this.playerForm.valid && this.playerForm.value.player.pin === this.playerForm.value.pin) {
-      this.authenticated = true
+      const candidate = this.candidates.find(c => c.id == this.playerForm.value.player.id)
+      if (candidate && candidate.votes && candidate.votes.length == 0) {
+        this.authenticated = true
+      } else {
+        this._snackBar.open('Already Voted!', '', { panelClass: 'accent', duration: 1500 })
+      }
+    } else {
+      this._snackBar.open('Incorrect Credentials!', '', { panelClass: 'accent', duration: 1500 })
     }
   }
 
   vote(event: Event) {
-    const votes = this.selectedCandidates
-      .filter(candidate => candidate.selected && candidate.isNominated)
-      .map(candidate => ({ id: candidate.id }))
-    this.loading = true
-    this.tournamentDocument
-      .update({
-        players: this.candidates.map(player => ({
-          count: player.selected && player.isNominated ? player.count + 1 : player.count,
-          isNominated: player.isNominated,
-          player: player.player,
-          votes: this.playerForm.value.player.id == player.id ? votes : player.votes
-        }))
-      })
-      .then(res => {
-        this._snackBar.open('Thanks for voting!', '', { panelClass: 'accent', duration: 1500 })
-      })
-      .catch(err => {
-        console.error(err)
-        this._snackBar.open('Something went wrong!', '', { panelClass: 'accent', duration: 1500 })
-      })
-      .finally(() => (this.loading = this.authenticated = false))
+    if (this.tournament.votingOpen) {
+      const votes = this.selectedCandidates
+        .filter(candidate => candidate.selected && candidate.isNominated)
+        .map(candidate => ({ id: candidate.id }))
+      this.loading = true
+      this.tournamentDocument
+        .update({
+          players: this.candidates.map(player => ({
+            count: player.selected && player.isNominated ? player.count + 1 : player.count,
+            isNominated: player.isNominated,
+            player: player.player,
+            votes: this.playerForm.value.player.id == player.id ? votes : player.votes
+          }))
+        })
+        // for clearing all votes
+        // .update({
+        //   players: this.candidates.map(player => ({
+        //     count: 0,
+        //     isNominated: player.isNominated,
+        //     player: player.player,
+        //     votes: []
+        //   }))
+        // })
+        .then(res => {
+          this._snackBar.open('Thanks for voting!', '', { panelClass: 'accent', duration: 1500 })
+        })
+        .catch(err => {
+          console.error(err)
+          this._snackBar.open('Something went wrong!', '', { panelClass: 'accent', duration: 1500 })
+        })
+        .finally(() => {
+          this.loading = this.authenticated = this.captain_selection_done = false
+          this.selectedCandidates = []
+          this.candidates.forEach(candidate => (candidate.selected = false))
+        })
+    } else {
+      this._snackBar.open('Voting not active!', '', { panelClass: 'accent', duration: 1500 })
+    }
   }
   reset(event: Event) {
     this.candidates.forEach(candidate => (candidate.selected = false))

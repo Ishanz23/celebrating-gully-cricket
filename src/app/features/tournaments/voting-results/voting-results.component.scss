@@ -1,0 +1,50 @@
+@import '~src/styles';
+
+.results {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  padding: 1rem;
+  .tournament {
+    width: 100%;
+    height: 3rem;
+    margin-bottom: 1rem;
+    padding: 1rem;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    h4 {
+      letter-spacing: 0.25rem;
+    }
+    p {
+      padding-top: 0.5rem;
+    }
+  }
+  .votes {
+    width: 100%;
+    height: auto;
+    h4 {
+      text-align: center;
+      text-transform: uppercase;
+      letter-spacing: 0.25rem;
+      margin-bottom: 1rem;
+    }
+    .candidate {
+      display: flex;
+      align-items: center;
+      padding: 0.5rem 0rem;
+      .name {
+        width: 40%;
+      }
+      .bar {
+        max-width: 50%;
+        height: 1rem;
+        background: $hover-accent-color;
+        margin: 0.5rem;
+      }
+    }
+  }
+}

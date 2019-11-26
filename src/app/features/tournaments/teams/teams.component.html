@@ -5,9 +5,9 @@
   </div>
   <div class="players">
     <mat-accordion>
-      <mat-expansion-panel *ngFor="let player of players">
+      <mat-expansion-panel *ngFor="let player of players; let i = index">
         <mat-expansion-panel-header>
-          <mat-panel-title> {{ player.firstName }} {{ player.lastName }} </mat-panel-title>
+          <mat-panel-title> {{ i + 1 }}. {{ player.firstName }} {{ player.lastName }} </mat-panel-title>
         </mat-expansion-panel-header>
         <div class="player-details">
           <div *ngIf="player.nickName" class="item">

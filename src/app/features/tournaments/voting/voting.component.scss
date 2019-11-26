@@ -16,6 +16,9 @@
       height: auto;
       mat-form-field {
         width: 100%;
+        input {
+          caret-color: $hover-accent-color;
+        }
       }
       .actions {
         width: 100%;

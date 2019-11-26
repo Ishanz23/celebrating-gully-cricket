@@ -32,7 +32,7 @@ export class EnrollPlayerComponent implements OnInit, OnDestroy {
   newPlayerForm = this.fb.group({
     firstName: [null, Validators.required],
     lastName: [null],
-    nickName: [null],
+    nickName: [''],
     address: ['Kolkata'],
     mobile: [null, [Validators.required, Validators.maxLength(10)]],
     yearOfBirth: [null],
@@ -92,6 +92,9 @@ export class EnrollPlayerComponent implements OnInit, OnDestroy {
               this.playersCollection
                 .add({
                   ...this.newPlayerForm.value,
+                  firstName: this.newPlayerForm.value.firstName.trim(),
+                  lastName: this.newPlayerForm.value.lastName.trim(),
+                  nickName: this.newPlayerForm.value.nickName.trim(),
                   career: {
                     ballsBowled: 0,
                     ballsFaced: 0,

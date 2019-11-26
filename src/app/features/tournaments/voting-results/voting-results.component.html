@@ -1,0 +1,14 @@
+<div class="results">
+  <div class="tournament" [routerLink]="'/tournaments'">
+    <h4>{{ tournament?.name | uppercase }}</h4>
+    <p>{{ tournament?.startDate.seconds * 1000 | date: 'MMM d, y' }}</p>
+  </div>
+  <mat-card class="votes">
+    <h4>Results</h4>
+    <div class="candidate" *ngFor="let candidate of candidates">
+      <div class="name">{{ candidate.firstName }} {{ candidate.lastName }}</div>
+      <div [ngStyle]="{ 'width.%': candidate.count * 2 }" class="bar"></div>
+      <div>{{ candidate.count }}</div>
+    </div>
+  </mat-card>
+</div>
