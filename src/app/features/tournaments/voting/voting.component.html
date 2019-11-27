@@ -36,7 +36,7 @@
       </div>
     </form>
   </mat-card>
-  <mat-card class="candidates-panel" *ngIf="authenticated" [ngClass]="{ blocked: loading }">
+  <mat-card class="candidates-panel" *ngIf="authenticated" [ngClass]="{ blocked: loading }" [@inOut]>
     <h4>Nominated Captains</h4>
     <div class="candidates">
       <ng-container *ngFor="let candidate of candidates">

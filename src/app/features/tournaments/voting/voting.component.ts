@@ -7,6 +7,7 @@ import { Player } from '../../players/player'
 import { Subscription } from 'rxjs'
 import { Tournamnent, TournamentPlayer } from '../tournament.model'
 import { FormBuilder, Validators } from '@angular/forms'
+import { trigger, state, transition, style, animate } from '@angular/animations'
 
 export interface Candidate extends Player {
   count: number
@@ -19,7 +20,13 @@ export interface Candidate extends Player {
 @Component({
   selector: 'app-voting',
   templateUrl: './voting.component.html',
-  styleUrls: ['./voting.component.scss']
+  styleUrls: ['./voting.component.scss'],
+  animations: [
+    trigger('inOut', [
+      transition(':enter', [style({ opacity: 0 }), animate('1s ease-out', style({ opacity: 1 }))]),
+      transition(':leave', [style({ opacity: 1 }), animate('1s ease-in', style({ opacity: 0 }))])
+    ])
+  ]
 })
 export class VotingComponent implements OnInit, OnDestroy {
   candidateRefs: TournamentPlayer[]

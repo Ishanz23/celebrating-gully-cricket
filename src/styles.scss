@@ -40,7 +40,7 @@ $pink-button-color: rgb(255, 64, 129);
 $caption-text-color: #f44336;
 $p-background-color: #505050;
 * {
-  margin: 0px;
+  margin: 0;
   box-sizing: border-box;
   color: #ececec;
 }
@@ -54,13 +54,8 @@ body {
   background: #ececec;
 }
 
-html,
-body {
-  height: 100%;
-}
-body {
-  margin: 0;
-  font-family: Roboto, 'Helvetica Neue', sans-serif;
+ul {
+  padding-inline-start: 0;
 }
 
 .accent {
