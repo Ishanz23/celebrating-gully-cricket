@@ -3,12 +3,25 @@
     <h4>{{ tournament?.name | uppercase }}</h4>
     <p>{{ tournament?.startDate.seconds * 1000 | date: 'MMM d, y' }}</p>
   </div>
-  <mat-card class="votes">
+  <mat-card class="votes" *ngIf="pinVerified">
     <h4>Results</h4>
     <div class="candidate" *ngFor="let candidate of candidates">
       <div class="name">{{ candidate.firstName }} {{ candidate.lastName }}</div>
       <div [ngStyle]="{ 'width.%': candidate.count * 2 }" class="bar"></div>
       <div>{{ candidate.count }}</div>
     </div>
+  </mat-card>
+  <mat-card class="special-pin" *ngIf="!pinVerified">
+    <mat-form-field>
+      <input matInput placeholder="Special Pin *" type="password" [formControl]="pin" />
+    </mat-form-field>
+    <button
+      mat-raised-button
+      color="accent"
+      (click)="pinVerified = pin.value == tournament.adminPin"
+      class="vote-button"
+    >
+      See Results
+    </button>
   </mat-card>
 </div>

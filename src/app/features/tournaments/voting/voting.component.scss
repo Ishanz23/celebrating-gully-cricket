@@ -49,7 +49,6 @@
     display: flex;
     flex-direction: column;
     width: 100%;
-    padding: 1rem;
     background: $panel-color;
     align-items: center;
     justify-content: space-between;
@@ -61,12 +60,11 @@
     }
     .candidates {
       position: relative;
-      height: calc(100% - 4rem);
-      // min-height: 44vh;
       display: flex;
       align-items: center;
       flex-wrap: wrap;
-      // flex: 1;
+      flex: 1;
+      overflow: auto;
       .loader {
         position: absolute;
         top: 50%;

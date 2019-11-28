@@ -12,6 +12,7 @@ export interface Tournamnent {
   duration?: number
   noOfTeams?: number
   votingOpen: boolean
+  adminPin?: string
   players: TournamentPlayer[]
 }
 export interface TournamentPlayer {

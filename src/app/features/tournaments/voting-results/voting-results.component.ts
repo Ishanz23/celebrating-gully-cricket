@@ -6,6 +6,7 @@ import { Tournamnent, TournamentPlayer } from '../tournament.model'
 import { Subscription } from 'rxjs'
 import { Candidate } from '../voting/voting.component'
 import { Player } from '../../players/player'
+import { FormControl, Validators } from '@angular/forms'
 
 @Component({
   selector: 'app-voting-results',
@@ -13,6 +14,8 @@ import { Player } from '../../players/player'
   styleUrls: ['./voting-results.component.scss']
 })
 export class VotingResultsComponent implements OnInit {
+  pin = new FormControl('', Validators.required)
+  pinVerified = false
   tournament_id: string
   tournament: Tournamnent
   tournamentDocument: AngularFirestoreDocument<any>

@@ -53,17 +53,20 @@ export class EnrollPlayerComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.loading = true
     this.tournament_id = this.activatedRoute.snapshot.paramMap.get('id')
     this.tournamentDocument = this.afs.doc(`tournaments/${this.tournament_id}`)
     this.subscriptions.add(
       this.tournamentDocument.valueChanges().subscribe(tournament => {
         this.tournament = { id: this.tournament_id, ...tournament }
+        this.loading = false
       })
     )
     this.playersCollection = this.afs.collection<Player>('players', ref => ref.orderBy('firstName'))
     this.subscriptions.add(
       this.playersCollection.valueChanges({ idField: 'id' }).subscribe(players => {
         this.players = players
+        this.loading = false
       })
     )
   }
