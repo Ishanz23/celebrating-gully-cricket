@@ -34,7 +34,7 @@ export class TeamsComponent implements OnInit {
             .get()
             .then(doc => {
               if (doc.exists) {
-                this.players.push({ id: doc.id, ...(doc.data() as Player) })
+                this.players.push({ id: doc.id, votes: player.votes, ...(doc.data() as Player) })
               }
             })
             .finally(() => (this.loading = false))

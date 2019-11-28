@@ -12,6 +12,7 @@ export interface Player {
   mobile: string
   yearOfBirth?: number
   career: Career
+  votes?: any[]
   tournaments?: firebase.firestore.DocumentReference[]
 }
 
