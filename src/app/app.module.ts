@@ -11,9 +11,7 @@ import { StoreModule } from '@ngrx/store'
 
 import { AngularFireModule } from '@angular/fire'
 
-import { MatSelectModule } from '@angular/material/select'
-
-import { reducers, metaReducers } from './reducers'
+import { reducers, metaReducers } from './store'
 import { AppEffects } from './app.effects'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
@@ -29,7 +27,6 @@ import { MaterialModule } from './material.module'
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatSelectModule,
     StoreModule.forRoot(reducers, {
       metaReducers,
       runtimeChecks: {

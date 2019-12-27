@@ -16,9 +16,15 @@ export class TournamentsComponent implements OnInit {
     this.afStore
       .collection('tournaments')
       .valueChanges({ idField: 'id' })
-      .subscribe(tournaments => {
-        this.loading = false
-        this.tournaments = tournaments
-      })
+      .subscribe(
+        tournaments => {
+          this.loading = false
+          this.tournaments = tournaments
+        },
+        err => {
+          this.loading = false
+          console.error(err)
+        }
+      )
   }
 }

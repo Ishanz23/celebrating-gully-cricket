@@ -26,6 +26,7 @@ import { MatBottomSheetModule } from '@angular/material/bottom-sheet'
     MatInputModule,
     MatButtonModule,
     MatRadioModule,
+    MatSelectModule,
     MatTabsModule,
     MatCheckboxModule,
     MatSnackBarModule,
