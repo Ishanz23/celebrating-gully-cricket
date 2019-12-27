@@ -20,6 +20,7 @@ import { HomeComponent } from './components/home/home.component'
 import { AngularFirestoreModule } from '@angular/fire/firestore'
 import { SharedModule } from './components/shared.module'
 import { MaterialModule } from './material.module'
+import { CustomSerializer } from './store/route.serializer'
 
 @NgModule({
   declarations: [AppComponent, NavbarComponent, HomeComponent],
@@ -39,7 +40,7 @@ import { MaterialModule } from './material.module'
       logOnly: environment.production
     }),
     EffectsModule.forRoot([AppEffects]),
-    StoreRouterConnectingModule.forRoot(),
+    StoreRouterConnectingModule.forRoot({ serializer: CustomSerializer }),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production
     }),
