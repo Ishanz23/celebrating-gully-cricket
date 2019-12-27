@@ -1,6 +1,6 @@
-import { ActionReducer, ActionReducerMap, createFeatureSelector, createSelector, MetaReducer } from '@ngrx/store'
+import { ActionReducerMap, MetaReducer } from '@ngrx/store'
 import { environment } from '../../environments/environment'
-import { RouterReducerState, getSelectors, routerReducer } from '@ngrx/router-store'
+import { RouterReducerState, routerReducer } from '@ngrx/router-store'
 import { RouterStateUrl } from './route.serializer'
 
 export const routerKey = 'router'
