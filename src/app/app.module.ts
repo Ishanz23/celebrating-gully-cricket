@@ -6,7 +6,7 @@ import { environment } from '../environments/environment'
 import { ServiceWorkerModule } from '@angular/service-worker'
 import { StoreDevtoolsModule } from '@ngrx/store-devtools'
 import { EffectsModule } from '@ngrx/effects'
-import { StoreRouterConnectingModule } from '@ngrx/router-store'
+import { StoreRouterConnectingModule, DefaultRouterStateSerializer } from '@ngrx/router-store'
 import { StoreModule } from '@ngrx/store'
 
 import { AngularFireModule } from '@angular/fire'
@@ -42,7 +42,7 @@ import { MaterialModule } from './material.module'
       logOnly: environment.production
     }),
     EffectsModule.forRoot([AppEffects]),
-    StoreRouterConnectingModule.forRoot(),
+    StoreRouterConnectingModule.forRoot({ serializer: DefaultRouterStateSerializer }),
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production
     }),
