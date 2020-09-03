@@ -11,9 +11,7 @@ import { StoreModule } from '@ngrx/store'
 
 import { AngularFireModule } from '@angular/fire'
 
-import { MatSelectModule } from '@angular/material/select'
-
-import { reducers, metaReducers } from './reducers'
+import { reducers, metaReducers } from './store'
 import { AppEffects } from './app.effects'
 import { AppRoutingModule } from './app-routing.module'
 import { AppComponent } from './app.component'
@@ -22,6 +20,7 @@ import { HomeComponent } from './components/home/home.component'
 import { AngularFirestoreModule } from '@angular/fire/firestore'
 import { SharedModule } from './components/shared.module'
 import { MaterialModule } from './material.module'
+import { CustomSerializer } from './store/route.serializer'
 
 @NgModule({
   declarations: [AppComponent, NavbarComponent, HomeComponent],
@@ -29,29 +28,28 @@ import { MaterialModule } from './material.module'
     BrowserModule,
     AppRoutingModule,
     BrowserAnimationsModule,
-    MatSelectModule,
     StoreModule.forRoot(reducers, {
       metaReducers,
       runtimeChecks: {
         strictStateImmutability: true,
-        strictActionImmutability: true
-      }
+        strictActionImmutability: true,
+      },
     }),
     StoreDevtoolsModule.instrument({
       maxAge: 25,
-      logOnly: environment.production
+      logOnly: environment.production,
     }),
     EffectsModule.forRoot([AppEffects]),
     StoreRouterConnectingModule.forRoot({ serializer: DefaultRouterStateSerializer }),
     ServiceWorkerModule.register('ngsw-worker.js', {
-      enabled: environment.production
+      enabled: environment.production,
     }),
     AngularFireModule.initializeApp(environment.firebase),
     AngularFirestoreModule,
     SharedModule,
-    MaterialModule
+    MaterialModule,
   ],
   providers: [],
-  bootstrap: [AppComponent]
+  bootstrap: [AppComponent],
 })
 export class AppModule {}
