@@ -31,7 +31,7 @@ import { CustomSerializer } from './store/route.serializer'
     StoreModule.forRoot(reducers, {
       metaReducers,
       runtimeChecks: {
-        strictStateImmutability: true,
+        strictStateImmutability: false,
         strictActionImmutability: true,
       },
     }),
