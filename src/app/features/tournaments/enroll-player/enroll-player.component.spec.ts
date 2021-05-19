@@ -1,4 +1,4 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed, waitForAsync } from '@angular/core/testing';
 
 import { EnrollPlayerComponent } from './enroll-player.component';
 
@@ -6,7 +6,7 @@ describe('EnrollPlayerComponent', () => {
   let component: EnrollPlayerComponent;
   let fixture: ComponentFixture<EnrollPlayerComponent>;
 
-  beforeEach(async(() => {
+  beforeEach(waitForAsync(() => {
     TestBed.configureTestingModule({
       declarations: [ EnrollPlayerComponent ]
     })
