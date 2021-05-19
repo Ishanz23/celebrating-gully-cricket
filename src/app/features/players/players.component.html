@@ -1,6 +1,6 @@
 <div class="players-container">
   <div class="players">
-    <mat-accordion>
+    <mat-accordion *ngIf="players$ | async as players">
       <mat-expansion-panel *ngFor="let player of players">
         <mat-expansion-panel-header>
           <mat-panel-title> {{ player.firstName }} {{ player.lastName }} </mat-panel-title>
@@ -38,16 +38,14 @@
               >
                 Yes
               </button>
-              <button mat-flat-button (click)="deletionActive = null" class="modify-button prompt">
-                No
-              </button>
+              <button mat-flat-button (click)="deletionActive = null" class="modify-button prompt">No</button>
             </ng-container>
           </div>
         </div>
       </mat-expansion-panel>
     </mat-accordion>
   </div>
-  <div class="loader" *ngIf="loading">
+  <div class="loader" *ngIf="loaderService.loader$ | async as loader">
     <app-loader radius="medium"></app-loader>
   </div>
 </div>

@@ -2,36 +2,33 @@ import { Component, OnInit, OnDestroy } from '@angular/core'
 import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore'
 import { Player } from './player'
 import { MatSnackBar, MatSnackBarVerticalPosition, MatSnackBarHorizontalPosition } from '@angular/material/snack-bar'
-import { Subscription } from 'rxjs'
+import { Observable, Subscription } from 'rxjs'
 import { environment } from 'src/environments/environment'
+import { LoaderService } from 'src/app/services/loader.service'
+import { first, startWith } from 'rxjs/operators'
 
 @Component({
   selector: 'app-players',
   templateUrl: './players.component.html',
-  styleUrls: ['./players.component.scss']
+  styleUrls: ['./players.component.scss'],
+  providers: [LoaderService],
 })
 export class PlayersComponent implements OnInit, OnDestroy {
   loading = true
-  deletionActive: string = null
   playersCollection: AngularFirestoreCollection<Player>
-  players: Player[] = []
-  subscriptions = new Subscription()
+  deletionActive: string = null
+  players$: Observable<Player[]>
 
-  constructor(private afs: AngularFirestore, private _snackBar: MatSnackBar) {}
+  constructor(private afs: AngularFirestore, private _snackBar: MatSnackBar, public loaderService: LoaderService) {}
 
   ngOnInit() {
-    this.playersCollection = this.afs.collection<Player>('players', ref => ref.orderBy('firstName'))
-    this.subscriptions.add(
-      this.playersCollection.valueChanges({ idField: 'id' }).subscribe(players => {
-        this.loading = false
-        this.players = players
-      })
-    )
+    this.playersCollection = this.afs.collection<Player>('players', (ref) => ref.orderBy('firstName'))
+    this.players$ = this.loaderService
+      .showLoaderUntilCompleted(this.playersCollection.valueChanges({ idField: 'id' }).pipe(first()))
+      .pipe(startWith([]))
   }
 
-  ngOnDestroy() {
-    this.subscriptions.unsubscribe()
-  }
+  ngOnDestroy() {}
 
   modify(event: Event, player: Player) {
     this.openSnackBar(`Coming Soon!`)
@@ -41,12 +38,12 @@ export class PlayersComponent implements OnInit, OnDestroy {
     if (environment.production) {
       this.openSnackBar(`Contact the admin`)
     } else {
-      player.tournaments.forEach(tournament => {
-        tournament.get().then(doc => {
+      player.tournaments.forEach((tournament) => {
+        tournament.get().then((doc) => {
           if (doc.exists) {
             const players = doc.data().players
             tournament.update({
-              players: players.filter(playerRef => playerRef.player.id !== player.id)
+              players: players.filter((playerRef) => playerRef.player.id !== player.id),
             })
           }
         })
@@ -54,10 +51,10 @@ export class PlayersComponent implements OnInit, OnDestroy {
       this.playersCollection
         .doc(player.id)
         .delete()
-        .then(done => {
+        .then((done) => {
           this.openSnackBar(`Data of ${player.firstName} ${player.lastName} deleted`)
         })
-        .catch(err => {
+        .catch((err) => {
           console.error(err)
           this.openSnackBar(`Failed to delete data of ${player.firstName} ${player.lastName}`)
         })
@@ -76,7 +73,7 @@ export class PlayersComponent implements OnInit, OnDestroy {
       duration,
       panelClass,
       verticalPosition,
-      horizontalPosition
+      horizontalPosition,
     })
   }
 }
