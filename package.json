@@ -28,7 +28,7 @@
     "@ngrx/store": "^12.0.0",
     "@ngrx/store-devtools": "^12.0.0",
     "firebase": "^8.6.1",
-    "lodash": "^4.17.20",
+    "lodash": "^4.17.21",
     "rxjs": "~6.6.2",
     "tslib": "^2.0.0",
     "zone.js": "~0.11.4"
