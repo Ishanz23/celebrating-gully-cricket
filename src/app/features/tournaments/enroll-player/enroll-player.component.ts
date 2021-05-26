@@ -1,24 +1,29 @@
 import { Component, OnInit, OnDestroy } from '@angular/core'
 import { ActivatedRoute } from '@angular/router'
-import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from '@angular/fire/firestore'
+import {
+  AngularFirestore,
+  AngularFirestoreCollection,
+  AngularFirestoreDocument,
+  DocumentData,
+} from '@angular/fire/firestore'
 import { FormControl, FormBuilder, Validators } from '@angular/forms'
-import * as firebase from 'firebase'
+import firebase from 'firebase'
 import { Player } from '../../players/player'
 import { MatSnackBar, MatSnackBarVerticalPosition, MatSnackBarHorizontalPosition } from '@angular/material/snack-bar'
 import { Subscription } from 'rxjs'
 import { take } from 'rxjs/operators'
-import { Tournamnent } from '../tournament.model'
+import { TournamentPlayer, Tournamnent } from '../tournament.model'
 
 @Component({
   selector: 'app-enroll-player',
   templateUrl: './enroll-player.component.html',
-  styleUrls: ['./enroll-player.component.scss']
+  styleUrls: ['./enroll-player.component.scss'],
 })
 export class EnrollPlayerComponent implements OnInit, OnDestroy {
   playersCollection: AngularFirestoreCollection<Player>
   tournament_id: string
   tournament: Tournamnent
-  tournamentDocument: AngularFirestoreDocument<any>
+  tournamentDocument: AngularFirestoreDocument<Tournamnent>
   searchText = new FormControl()
   registeredPlayerPin = new FormControl()
   players: Player[]
@@ -27,7 +32,7 @@ export class EnrollPlayerComponent implements OnInit, OnDestroy {
   registeredPlayerForm = this.fb.group({
     player: [null, Validators.required],
     pin: ['', [Validators.required, Validators.maxLength(4)]],
-    captaincy: [false]
+    captaincy: [false],
   })
   newPlayerForm = this.fb.group({
     firstName: [null, Validators.required],
@@ -40,7 +45,7 @@ export class EnrollPlayerComponent implements OnInit, OnDestroy {
     battingOrientation: ['right'],
     bowlingOrientation: ['right'],
     specialization: ['all-rounder'],
-    captaincy: [false]
+    captaincy: [false],
   })
   loading = false
   subscriptions = new Subscription()
@@ -55,16 +60,16 @@ export class EnrollPlayerComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.loading = true
     this.tournament_id = this.activatedRoute.snapshot.paramMap.get('id')
-    this.tournamentDocument = this.afs.doc(`tournaments/${this.tournament_id}`)
+    this.tournamentDocument = this.afs.doc<Tournamnent>(`tournaments/${this.tournament_id}`)
     this.subscriptions.add(
-      this.tournamentDocument.valueChanges().subscribe(tournament => {
+      this.tournamentDocument.valueChanges().subscribe((tournament) => {
         this.tournament = { id: this.tournament_id, ...tournament }
         this.loading = false
       })
     )
-    this.playersCollection = this.afs.collection<Player>('players', ref => ref.orderBy('firstName'))
+    this.playersCollection = this.afs.collection<Player>('players', (ref) => ref.orderBy('firstName'))
     this.subscriptions.add(
-      this.playersCollection.valueChanges({ idField: 'id' }).subscribe(players => {
+      this.playersCollection.valueChanges({ idField: 'id' }).subscribe((players) => {
         this.players = players
         this.loading = false
       })
@@ -84,10 +89,12 @@ export class EnrollPlayerComponent implements OnInit, OnDestroy {
       // console.log(this.newPlayerForm.value)
       if (this.newPlayerForm.valid) {
         this.afs
-          .collection('players', ref => ref.where('mobile', '==', this.newPlayerForm.controls.mobile.value))
+          .collectionGroup<Player>('players', (ref) =>
+            ref.where('mobile', '==', this.newPlayerForm.controls.mobile.value)
+          )
           .valueChanges()
           .pipe(take(1))
-          .subscribe(players => {
+          .subscribe((players) => {
             if (players && players.length > 0) {
               this.loading = false
               this.openSnackBar('Mobile number already exists', 'Error!')
@@ -113,21 +120,21 @@ export class EnrollPlayerComponent implements OnInit, OnDestroy {
                     runsConceded: 0,
                     strikeRate: 0,
                     stumpings: 0,
-                    wickets: 0
+                    wickets: 0,
                   },
-                  tournaments: [this.afs.doc(`tournaments/${this.tournament_id}`).ref]
+                  tournaments: [this.afs.doc(`tournaments/${this.tournament_id}`).ref],
                 })
-                .then(data => {
+                .then((data) => {
                   this.tournamentDocument
                     .update({
                       players: firebase.firestore.FieldValue.arrayUnion({
                         player: this.playersCollection.doc(data.id).ref,
                         isNominated: this.newPlayerForm.value.captaincy,
                         count: 0,
-                        votes: []
-                      })
+                        votes: [],
+                      }) as unknown as TournamentPlayer[],
                     })
-                    .then(data => {
+                    .then((data) => {
                       this.openSnackBar(
                         this.newPlayerForm.value.firstName + ' ' + this.newPlayerForm.value.lastName,
                         'Enrolled!'
@@ -136,7 +143,7 @@ export class EnrollPlayerComponent implements OnInit, OnDestroy {
                     })
                     .finally(() => (this.loading = false))
                 })
-                .catch(err => this.openSnackBar(err, 'Error!'))
+                .catch((err) => this.openSnackBar(err, 'Error!'))
                 .finally(() => (this.loading = false))
             }
           })
@@ -150,11 +157,11 @@ export class EnrollPlayerComponent implements OnInit, OnDestroy {
         this.registeredPlayerForm.valid &&
         this.registeredPlayerForm.value.player.pin === this.registeredPlayerForm.value.pin
       ) {
-        this.tournamentDocument.get().subscribe(doc => {
+        this.tournamentDocument.get().subscribe((doc) => {
           if (doc.exists) {
             const tournament = doc.data()
             const does_player_exist = tournament.players.find(
-              player => player.player.id == this.registeredPlayerForm.value.player.id
+              (player) => player.player.id == this.registeredPlayerForm.value.player.id
             )
             if (!does_player_exist) {
               this.tournamentDocument
@@ -163,10 +170,10 @@ export class EnrollPlayerComponent implements OnInit, OnDestroy {
                     player: this.playersCollection.doc(this.registeredPlayerForm.value.player.id).ref,
                     isNominated: this.registeredPlayerForm.value.captaincy,
                     count: 0,
-                    votes: []
-                  })
+                    votes: [],
+                  }) as unknown as TournamentPlayer[],
                 })
-                .then(data => {
+                .then((data) => {
                   this.openSnackBar(
                     this.registeredPlayerForm.value.player.firstName +
                       ' ' +
@@ -175,10 +182,12 @@ export class EnrollPlayerComponent implements OnInit, OnDestroy {
                     ''
                   )
                 })
-                .catch(err => this.openSnackBar(err, 'Error!'))
+                .catch((err) => this.openSnackBar(err, 'Error!'))
                 .finally(() => (this.loading = false))
               this.playersCollection.doc(this.registeredPlayerForm.value.player.id).update({
-                tournaments: firebase.firestore.FieldValue.arrayUnion(this.tournamentDocument.ref)
+                tournaments: firebase.firestore.FieldValue.arrayUnion(
+                  this.tournamentDocument.ref
+                ) as unknown as firebase.firestore.DocumentReference<DocumentData>[],
               })
             } else {
               this.loading = false
@@ -210,20 +219,20 @@ export class EnrollPlayerComponent implements OnInit, OnDestroy {
       this.registeredPlayerForm.valid &&
       this.registeredPlayerForm.value.player.pin === this.registeredPlayerForm.value.pin
     ) {
-      this.tournamentDocument.get().subscribe(doc => {
+      this.tournamentDocument.get().subscribe((doc) => {
         if (doc.exists) {
           const tournament = doc.data()
           const does_player_exist = tournament.players.find(
-            player => player.player.id == this.registeredPlayerForm.value.player.id
+            (player) => player.player.id == this.registeredPlayerForm.value.player.id
           )
           if (does_player_exist) {
             this.tournamentDocument
               .update({
                 players: tournament.players.filter(
-                  playerRef => playerRef.player.id !== this.registeredPlayerForm.value.player.id
-                )
+                  (playerRef) => playerRef.player.id !== this.registeredPlayerForm.value.player.id
+                ),
               })
-              .then(data => {
+              .then((data) => {
                 this.openSnackBar(
                   this.registeredPlayerForm.value.player.firstName +
                     ' ' +
@@ -232,10 +241,12 @@ export class EnrollPlayerComponent implements OnInit, OnDestroy {
                   ''
                 )
               })
-              .catch(err => this.openSnackBar(err, 'Error!'))
+              .catch((err) => this.openSnackBar(err, 'Error!'))
               .finally(() => (this.loading = false))
             this.playersCollection.doc(this.registeredPlayerForm.value.player.id).update({
-              tournaments: firebase.firestore.FieldValue.arrayRemove(this.tournamentDocument.ref)
+              tournaments: firebase.firestore.FieldValue.arrayRemove(
+                this.tournamentDocument.ref
+              ) as unknown as firebase.firestore.DocumentReference<DocumentData>[],
             })
           } else {
             this.loading = false
@@ -264,7 +275,7 @@ export class EnrollPlayerComponent implements OnInit, OnDestroy {
       duration,
       panelClass,
       verticalPosition,
-      horizontalPosition
+      horizontalPosition,
     })
   }
 }

@@ -7,11 +7,12 @@ import { Subscription } from 'rxjs'
 import { Candidate } from '../voting/voting.component'
 import { Player } from '../../players/player'
 import { FormControl, Validators } from '@angular/forms'
+import { MatSnackBar } from '@angular/material/snack-bar'
 
 @Component({
   selector: 'app-voting-results',
   templateUrl: './voting-results.component.html',
-  styleUrls: ['./voting-results.component.scss']
+  styleUrls: ['./voting-results.component.scss'],
 })
 export class VotingResultsComponent implements OnInit {
   pin = new FormControl('', Validators.required)
@@ -24,34 +25,42 @@ export class VotingResultsComponent implements OnInit {
   candidateRefs: TournamentPlayer[]
   playerRefs: TournamentPlayer[]
   candidates: Candidate[] = []
-  constructor(private afs: AngularFirestore, private activatedRoute: ActivatedRoute) {}
+  constructor(private afs: AngularFirestore, private activatedRoute: ActivatedRoute, private _snackBar: MatSnackBar) {}
 
   ngOnInit() {
     this.tournament_id = this.activatedRoute.snapshot.paramMap.get('id')
     this.tournamentDocument = this.afs.doc<Tournamnent>(`tournaments/${this.tournament_id}`)
     this.subscriptions.add(
-      this.tournamentDocument.valueChanges().subscribe(tournament => {
+      this.tournamentDocument.valueChanges().subscribe((tournament) => {
         this.tournament = { id: this.tournament_id, ...tournament }
         this.playerRefs = this.tournament.players
         this.candidateRefs = _.orderBy(
-          this.tournament.players.filter(player => player.isNominated),
+          this.tournament.players.filter((player) => player.isNominated),
           ['count'],
           ['desc']
         )
         for (const playerRef of this.candidateRefs) {
-          playerRef.player.get().then(doc => {
+          playerRef.player.get().then((doc) => {
             if (doc.exists) {
-              this.candidates = this.candidates.filter(c => c.id !== doc.id)
+              this.candidates = this.candidates.filter((c) => c.id !== doc.id)
               this.candidates.push({
                 ...playerRef,
                 selected: false,
                 id: doc.id,
-                ...(doc.data() as Player)
+                ...(doc.data() as Player),
               })
             }
           })
         }
       })
     )
+  }
+
+  verifyPin(event: MouseEvent) {
+    this.pinVerified = this.pin.value === this.tournament.adminPin
+
+    if (!this.pinVerified) {
+      this._snackBar.open('Wrong Pin Entered!', 'Error', { panelClass: 'error-snackbar' })
+    }
   }
 }

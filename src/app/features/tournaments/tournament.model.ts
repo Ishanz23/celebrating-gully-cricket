@@ -1,6 +1,6 @@
 import { AngularFirestoreDocument } from '@angular/fire/firestore'
 import { Player } from '../players/player'
-
+import firebase from 'firebase'
 export interface Tournamnent {
   id?: string
   name: string

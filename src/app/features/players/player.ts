@@ -1,4 +1,5 @@
 import { AngularFirestoreDocument, AngularFirestore } from '@angular/fire/firestore'
+import firebase from 'firebase'
 
 export interface Player {
   id?: string
